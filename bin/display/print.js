@@ -57,9 +57,9 @@ const printTodoList = (todos) => {
 			const boxenConfig = {
 				borderColor: todo.complete ? 'green' : 'red',
 				borderStyle: 'round',
-				textAlignment: 'center',
+				textAlignment: 'left',
 				title: todo.complete ? 'Complete' : 'Incomplete',
-				titleAlignment: 'center',
+				titleAlignment: 'right',
 				width: 60,
 			}
 
