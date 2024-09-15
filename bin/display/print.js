@@ -47,3 +47,30 @@ const printBox = (text, options = {}) => {
 	console.log(box)
 	console.log('\n')
 }
+
+const printTodoList = (todos) => {
+	if (todos?.length) {
+		todos.forEach((todo) => {
+			const text = todo.complete
+				? chalk.green.italic(todo.label)
+				: chalk.red.bold(todo.label)
+			const boxenConfig = {
+				borderColor: todo.complete ? 'green' : 'red',
+				borderStyle: 'round',
+				textAlignment: 'center',
+				title: todo.complete ? 'Complete' : 'Incomplete',
+				titleAlignment: 'center',
+				width: 60,
+			}
+
+			console.log(boxen(text, boxenConfig))
+		})
+		console.log('\n')
+	} else {
+		printBox('No TODOs found. Take the day off.', {
+			title: 'NO TODOS',
+			titleAlignment: 'center',
+			borderColor: 'yellow',
+		})
+	}
+}
