@@ -28,7 +28,7 @@ const handleMenuSelection = async (selection, todosManager) => {
 			printBox('Godspeed, friend', {
 				title: 'Exiting',
 				titleAlignment: 'center',
-			})
+			}, 'success')
 	}
 }
 
