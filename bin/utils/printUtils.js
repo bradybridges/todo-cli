@@ -1,9 +1,9 @@
 import boxen from 'boxen'
 import chalk from 'chalk'
 
-const baseRed = '#ff595e';
-const baseYellow = '#ffca3a';
-const baseGreen = '#8ac926';
+const baseRed = '#fc7060'
+const baseYellow = '#ffe046'
+const baseGreen = '#7dcc7f'
 const whiteBoldText = chalk.white.bold
 const greenText = chalk.hex(baseGreen)
 const greenBoldText = chalk.hex(baseGreen).bold
@@ -87,11 +87,15 @@ const printTodoList = (todos) => {
 		})
 		console.log('\n')
 	} else {
-		printBox('No TODOs found. Take the day off.', {
-			title: 'NO TODOS',
-			titleAlignment: 'center',
-			borderColor: baseYellow,
-		}, 'warning')
+		printBox(
+			'No TODOs found. Take the day off.',
+			{
+				title: 'NO TODOS',
+				titleAlignment: 'center',
+				borderColor: baseYellow,
+			},
+			'warning'
+		)
 	}
 }
 
