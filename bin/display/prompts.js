@@ -63,3 +63,11 @@ const deleteTodosPrompt = async (todosManager) => {
 const confirmPrompt = async (message) => {
 	return await confirm({ message })
 }
+
+export {
+	getMenuSelectionPrompt,
+	getNewTodoPrompt,
+	updateTodosPrompt,
+	deleteTodosPrompt,
+	confirmPrompt,
+}
