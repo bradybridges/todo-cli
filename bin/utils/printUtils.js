@@ -1,18 +1,19 @@
 import boxen from 'boxen'
 import chalk from 'chalk'
 
-const baseRed = '';
-const baseYellow = '';
-const baseGreen = '';
+const baseRed = '#ff595e';
+const baseYellow = '#ffca3a';
+const baseGreen = '#8ac926';
 const whiteBoldText = chalk.white.bold
-const greenText = chalk.green
-const greenBoldText = chalk.green.bold
-const greenItalicText = chalk.green.italic
-const redBoldText = chalk.red.bold
+const greenText = chalk.hex(baseGreen)
+const greenBoldText = chalk.hex(baseGreen).bold
+const greenItalicText = chalk.hex(baseGreen).italic
+const redBoldText = chalk.hex(baseRed).bold
+const yellowBoldText = chalk.hex(baseYellow).bold
 
 const boxWidth = 60
 const boxenOptions = {
-	borderColor: 'green',
+	borderColor: baseGreen,
 	borderStyle: 'double',
 	height: 1,
 	margin: 0,
@@ -41,7 +42,7 @@ const printTitle = (todos) => {
 
 const printBox = (text, options = {}) => {
 	const boxenOptions = {
-		borderColor: 'green',
+		borderColor: baseGreen,
 		borderStyle: 'double',
 		height: 1,
 		margin: 0,
@@ -66,7 +67,7 @@ const printTodoList = (todos) => {
 				? greenItalicText(todo.label)
 				: redBoldText(todo.label)
 			const boxenConfig = {
-				borderColor: todo.complete ? 'green' : 'red',
+				borderColor: todo.complete ? baseGreen : baseRed,
 				borderStyle: 'round',
 				textAlignment: 'left',
 				title: todo.complete ? 'Complete' : 'Incomplete',
@@ -81,8 +82,7 @@ const printTodoList = (todos) => {
 		printBox('No TODOs found. Take the day off.', {
 			title: 'NO TODOS',
 			titleAlignment: 'center',
-			borderColor: 'yellow',
-		})
+			borderColor: baseYellow,
 	}
 }
 
