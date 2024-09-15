@@ -61,3 +61,16 @@ const handleDeleteTodos = async (todosManager) => {
 		printSuccessMessage('Successfully deleted selected tasks')
 	}
 }
+
+const handleClearTodos = async (todosManager) => {
+	const confirmed = await confirmPrompt(
+		'Are you sure you want to delete all todo items?'
+	)
+
+	if (confirmed) {
+		todosManager.deleteTodos()
+		printSuccessMessage('Successfully deleted todos')
+	} else {
+		printErrorMessage('Aborted deleting todos')
+	}
+}
