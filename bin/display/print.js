@@ -27,3 +27,23 @@ const printTitle = (todos) => {
 	}
 	console.log(boxen(msg, { ...boxenOptions, title }))
 }
+
+const printBox = (text, options = {}) => {
+	const boxenOptions = {
+		borderColor: 'green',
+		borderStyle: 'double',
+		height: 1,
+		margin: 0,
+		padding: 1,
+		textAlignment: 'center',
+		width: 60,
+		...options,
+	}
+
+	const msg = chalk.white.bold(text)
+	const box = boxen(msg, boxenOptions)
+
+	console.log('\n')
+	console.log(box)
+	console.log('\n')
+}
