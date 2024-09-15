@@ -74,3 +74,17 @@ const printTodoList = (todos) => {
 		})
 	}
 }
+
+const printSuccessMessage = (msg, disableSpacing = false) => {
+	const successMsg = chalk.green(msg)
+	if (!disableSpacing) console.log('\n')
+	console.log(`${successMsg}`)
+	console.log('\n')
+}
+
+const printErrorMessage = (msg, disableSpacing = false) => {
+	const errorMsg = chalk.red.bold(msg)
+	if (!disableSpacing) console.log('\n')
+	console.log(`${errorMsg}`)
+	console.log('\n')
+}
