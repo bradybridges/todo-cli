@@ -25,7 +25,7 @@ const handleMenuSelection = async (selection, todosManager) => {
 			await handleClearTodos(todosManager)
 			break
 		default:
-			printBox('Goodspeed, friend', {
+			printBox('Godspeed, friend', {
 				title: 'Exiting',
 				titleAlignment: 'center',
 			})
