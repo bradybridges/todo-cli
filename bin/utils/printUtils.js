@@ -1,6 +1,15 @@
 import boxen from 'boxen'
 import chalk from 'chalk'
 
+const baseRed = '';
+const baseYellow = '';
+const baseGreen = '';
+const whiteBoldText = chalk.white.bold
+const greenText = chalk.green
+const greenBoldText = chalk.green.bold
+const greenItalicText = chalk.green.italic
+const redBoldText = chalk.red.bold
+
 const boxWidth = 60
 const boxenOptions = {
 	borderColor: 'green',
@@ -17,7 +26,7 @@ const printTitle = (todos) => {
 	const completedTodosCount = todos.filter((todo) => todo.complete).length
 	const incompleteTodosCount = todos.filter((todo) => !todo.complete).length
 
-	const msg = chalk.green.bold('TODO LIST')
+	const msg = greenBoldText('TODO LIST')
 	let title
 
 	if (completedTodosCount > 0 || incompleteTodosCount > 0) {
@@ -42,7 +51,7 @@ const printBox = (text, options = {}) => {
 		...options,
 	}
 
-	const msg = chalk.white.bold(text)
+	const msg = whiteBoldText(text)
 	const box = boxen(msg, boxenOptions)
 
 	console.log('\n')
@@ -54,8 +63,8 @@ const printTodoList = (todos) => {
 	if (todos?.length) {
 		todos.forEach((todo) => {
 			const text = todo.complete
-				? chalk.green.italic(todo.label)
-				: chalk.red.bold(todo.label)
+				? greenItalicText(todo.label)
+				: redBoldText(todo.label)
 			const boxenConfig = {
 				borderColor: todo.complete ? 'green' : 'red',
 				borderStyle: 'round',
@@ -78,14 +87,14 @@ const printTodoList = (todos) => {
 }
 
 const printSuccessMessage = (msg, disableSpacing = false) => {
-	const successMsg = chalk.green(msg)
+	const successMsg = greenText(msg)
 	if (!disableSpacing) console.log('\n')
 	console.log(`${successMsg}`)
 	console.log('\n')
 }
 
 const printErrorMessage = (msg, disableSpacing = false) => {
-	const errorMsg = chalk.red.bold(msg)
+	const errorMsg = redBoldText(msg)
 	if (!disableSpacing) console.log('\n')
 	console.log(`${errorMsg}`)
 	console.log('\n')
