@@ -29,3 +29,7 @@ const getMenuSelectionPrompt = async () => {
 
 	return selection
 }
+
+const getNewTodoPrompt = async () => {
+	return await input({ message: 'Enter new todo: ' })
+}
