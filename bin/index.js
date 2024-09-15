@@ -4,10 +4,10 @@
 import Conf from 'conf'
 
 /* local imports */
-import { TodoManager } from './todo-helpers/TodoManager.js'
-import { printBox, printTitle, printTodoList } from './display/print.js'
-import { getMenuSelectionPrompt } from './display/prompts.js'
-import { handleMenuSelection } from './selections/actions.js'
+import { TodoManager } from './utils/TodoManager.js'
+import { printBox, printTitle, printTodoList } from './utils/printUtils.js'
+import { getMenuSelectionPrompt } from './utils/promptUtils.js'
+import { handleMenuSelection } from './utils/actionUtils.js'
 
 const store = new Conf({
 	projectName: 'todo',
