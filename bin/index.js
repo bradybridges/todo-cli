@@ -21,14 +21,13 @@ const store = new Conf({
 const todoManager = new TodoManager(store)
 
 let runApplication = true
-let menuSelection
 
 while (runApplication) {
 	try {
 		if (todoManager.todos.length) printTitle(todoManager.todos)
 		printTodoList(todoManager.todos)
 
-		menuSelection = await getMenuSelectionPrompt()
+		const menuSelection = await getMenuSelectionPrompt()
 
 		if (!menuSelection) {
 			runApplication = false
