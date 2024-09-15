@@ -25,6 +25,8 @@ const printTitle = (todos) => {
 	} else {
 		title = 'No Todos Added'
 	}
+
+	console.log('\n')
 	console.log(boxen(msg, { ...boxenOptions, title }))
 }
 
