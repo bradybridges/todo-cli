@@ -10,6 +10,28 @@ import {
 	updateTodosPrompt,
 } from '../display/prompts.js'
 
+const handleMenuSelection = async (selection, todosManager) => {
+	switch (selection) {
+		case 'add':
+			await handleAddTodo(todosManager)
+			break
+		case 'update':
+			await handleUpdateTodos(todosManager)
+			break
+		case 'delete':
+			await handleDeleteTodos(todosManager)
+			break
+		case 'clear':
+			await handleClearTodos(todosManager)
+			break
+		default:
+			printBox('Goodspeed, friend', {
+				title: 'Exiting',
+				titleAlignment: 'center',
+			})
+	}
+}
+
 const handleUpdateTodos = async (todosManager) => {
 	if (todosManager.todos.length === 0) {
 		printErrorMessage('There are no tasks to update')
@@ -79,3 +101,5 @@ const handleAddTodo = async (todosManager) => {
 	const newTodo = await getNewTodoPrompt()
 	todosManager.addTodo(newTodo)
 }
+
+export { handleMenuSelection }
