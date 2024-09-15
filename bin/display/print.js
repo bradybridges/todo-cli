@@ -88,3 +88,11 @@ const printErrorMessage = (msg, disableSpacing = false) => {
 	console.log(`${errorMsg}`)
 	console.log('\n')
 }
+
+export {
+	printTitle,
+	printBox,
+	printTodoList,
+	printSuccessMessage,
+	printErrorMessage,
+}
