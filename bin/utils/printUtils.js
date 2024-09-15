@@ -40,7 +40,7 @@ const printTitle = (todos) => {
 	console.log(boxen(msg, { ...boxenOptions, title }))
 }
 
-const printBox = (text, options = {}) => {
+const printBox = (text, options = {}, type = 'default') => {
 	const boxenOptions = {
 		borderColor: baseGreen,
 		borderStyle: 'double',
@@ -51,8 +51,16 @@ const printBox = (text, options = {}) => {
 		width: 60,
 		...options,
 	}
+	const textTypes = {
+		success: greenBoldText,
+		warning: yellowBoldText,
+		error: redBoldText,
+	}
 
-	const msg = whiteBoldText(text)
+	let msg = whiteBoldText(text)
+
+	if (textTypes[type]) msg = textTypes[type](text)
+
 	const box = boxen(msg, boxenOptions)
 
 	console.log('\n')
@@ -83,6 +91,7 @@ const printTodoList = (todos) => {
 			title: 'NO TODOS',
 			titleAlignment: 'center',
 			borderColor: baseYellow,
+		}, 'warning')
 	}
 }
 
