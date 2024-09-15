@@ -74,3 +74,8 @@ const handleClearTodos = async (todosManager) => {
 		printErrorMessage('Aborted deleting todos')
 	}
 }
+
+const handleAddTodo = async (todosManager) => {
+	const newTodo = await getNewTodoPrompt()
+	todosManager.addTodo(newTodo)
+}
