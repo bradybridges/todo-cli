@@ -46,3 +46,16 @@ const updateTodosPrompt = async (todosManager) => {
 		}),
 	})
 }
+
+const deleteTodosPrompt = async (todosManager) => {
+	return await checkbox({
+		message: 'Select tasks to delete: ',
+		choices: todosManager.todos.map((todo) => {
+			return {
+				name: `${todo.label} - ${todo.complete ? 'complete' : 'incomplete'}`,
+				value: todo.label,
+				checked: false,
+			}
+		}),
+	})
+}
