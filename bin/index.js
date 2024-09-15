@@ -39,7 +39,7 @@ while (runApplication) {
 			title: 'Exiting due to an error',
 			titleAlignment: 'center',
 			borderColor: 'red',
-		})
+		}, 'error')
 		runApplication = false
 	}
 }

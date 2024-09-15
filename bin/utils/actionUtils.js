@@ -28,7 +28,7 @@ const handleMenuSelection = async (selection, todosManager) => {
 			printBox('Godspeed, friend', {
 				title: 'Exiting',
 				titleAlignment: 'center',
-			})
+			}, 'success')
 	}
 }
 
@@ -54,7 +54,6 @@ const handleUpdateTodos = async (todosManager) => {
 		})
 
 		todosManager.updateTodos(updatedTodos)
-		printSuccessMessage('Todos updated successfully')
 	}
 }
 
@@ -80,7 +79,6 @@ const handleDeleteTodos = async (todosManager) => {
 		)
 
 		todosManager.updateTodos(updatedTodos)
-		printSuccessMessage('Successfully deleted selected tasks')
 	}
 }
 
@@ -91,7 +89,6 @@ const handleClearTodos = async (todosManager) => {
 
 	if (confirmed) {
 		todosManager.deleteTodos()
-		printSuccessMessage('Successfully deleted todos')
 	} else {
 		printErrorMessage('Aborted deleting todos')
 	}

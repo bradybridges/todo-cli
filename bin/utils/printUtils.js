@@ -1,9 +1,19 @@
 import boxen from 'boxen'
 import chalk from 'chalk'
 
+const baseRed = '#fc7060'
+const baseYellow = '#ffe046'
+const baseGreen = '#7dcc7f'
+const whiteBoldText = chalk.white.bold
+const greenText = chalk.hex(baseGreen)
+const greenBoldText = chalk.hex(baseGreen).bold
+const greenItalicText = chalk.hex(baseGreen).italic
+const redBoldText = chalk.hex(baseRed).bold
+const yellowBoldText = chalk.hex(baseYellow).bold
+
 const boxWidth = 60
 const boxenOptions = {
-	borderColor: 'green',
+	borderColor: baseGreen,
 	borderStyle: 'double',
 	height: 1,
 	margin: 0,
@@ -17,7 +27,7 @@ const printTitle = (todos) => {
 	const completedTodosCount = todos.filter((todo) => todo.complete).length
 	const incompleteTodosCount = todos.filter((todo) => !todo.complete).length
 
-	const msg = chalk.green.bold('TODO LIST')
+	const msg = greenBoldText('TODO LIST')
 	let title
 
 	if (completedTodosCount > 0 || incompleteTodosCount > 0) {
@@ -30,9 +40,9 @@ const printTitle = (todos) => {
 	console.log(boxen(msg, { ...boxenOptions, title }))
 }
 
-const printBox = (text, options = {}) => {
+const printBox = (text, options = {}, type = 'default') => {
 	const boxenOptions = {
-		borderColor: 'green',
+		borderColor: baseGreen,
 		borderStyle: 'double',
 		height: 1,
 		margin: 0,
@@ -41,8 +51,16 @@ const printBox = (text, options = {}) => {
 		width: 60,
 		...options,
 	}
+	const textTypes = {
+		success: greenBoldText,
+		warning: yellowBoldText,
+		error: redBoldText,
+	}
 
-	const msg = chalk.white.bold(text)
+	let msg = whiteBoldText(text)
+
+	if (textTypes[type]) msg = textTypes[type](text)
+
 	const box = boxen(msg, boxenOptions)
 
 	console.log('\n')
@@ -54,10 +72,10 @@ const printTodoList = (todos) => {
 	if (todos?.length) {
 		todos.forEach((todo) => {
 			const text = todo.complete
-				? chalk.green.italic(todo.label)
-				: chalk.red.bold(todo.label)
+				? greenItalicText(todo.label)
+				: redBoldText(todo.label)
 			const boxenConfig = {
-				borderColor: todo.complete ? 'green' : 'red',
+				borderColor: todo.complete ? baseGreen : baseRed,
 				borderStyle: 'round',
 				textAlignment: 'left',
 				title: todo.complete ? 'Complete' : 'Incomplete',
@@ -69,23 +87,27 @@ const printTodoList = (todos) => {
 		})
 		console.log('\n')
 	} else {
-		printBox('No TODOs found. Take the day off.', {
-			title: 'NO TODOS',
-			titleAlignment: 'center',
-			borderColor: 'yellow',
-		})
+		printBox(
+			'No TODOs found. Take the day off.',
+			{
+				title: 'NO TODOS',
+				titleAlignment: 'center',
+				borderColor: baseYellow,
+			},
+			'warning'
+		)
 	}
 }
 
 const printSuccessMessage = (msg, disableSpacing = false) => {
-	const successMsg = chalk.green(msg)
+	const successMsg = greenText(msg)
 	if (!disableSpacing) console.log('\n')
 	console.log(`${successMsg}`)
 	console.log('\n')
 }
 
 const printErrorMessage = (msg, disableSpacing = false) => {
-	const errorMsg = chalk.red.bold(msg)
+	const errorMsg = redBoldText(msg)
 	if (!disableSpacing) console.log('\n')
 	console.log(`${errorMsg}`)
 	console.log('\n')
