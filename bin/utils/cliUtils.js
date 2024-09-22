@@ -70,6 +70,19 @@ const initListTasksCommand = (program, todoManager) => {
 		})
 }
 
+const initClearCompletedTasksCommand = (program, todoManager) => {
+	program
+		.command('clear-completed')
+		.description('Clear all completed tasks')
+		.action(() => {
+			const incompleteTodos = todoManager.todos.filter(
+				(todo) => !todo.complete
+			)
+			todoManager.updateTodos(incompleteTodos)
+			printSuccessMessage('Completed tasks cleared successfully')
+		})
+}
+
 const initCLI = (todoManager) => {
 	const program = new commander.Command()
 
@@ -77,6 +90,7 @@ const initCLI = (todoManager) => {
 	initAddTaskCommand(program, todoManager)
 	initClearTasksCommand(program, todoManager)
 	initListTasksCommand(program, todoManager)
+	initClearCompletedTasksCommand(program, todoManager)
 
 	return program
 }
