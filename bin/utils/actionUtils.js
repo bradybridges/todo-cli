@@ -25,10 +25,14 @@ const handleMenuSelection = async (selection, todosManager) => {
 			await handleClearTodos(todosManager)
 			break
 		default:
-			printBox('Godspeed, friend', {
-				title: 'Exiting',
-				titleAlignment: 'center',
-			}, 'success')
+			printBox(
+				'Godspeed, friend',
+				{
+					title: 'Exiting',
+					titleAlignment: 'center',
+				},
+				'success'
+			)
 	}
 }
 
@@ -96,7 +100,10 @@ const handleClearTodos = async (todosManager) => {
 
 const handleAddTodo = async (todosManager) => {
 	const newTodo = await getNewTodoPrompt()
-	todosManager.addTodo(newTodo)
+
+	if (newTodo) {
+		todosManager.addTodo(newTodo)
+	}
 }
 
-export { handleMenuSelection }
+export { handleMenuSelection, handleAddTodo }
