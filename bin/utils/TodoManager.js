@@ -1,3 +1,5 @@
+import { printErrorMessage } from './printUtils.js'
+
 export class TodoManager {
 	constructor(store) {
 		this.store = store
@@ -9,7 +11,7 @@ export class TodoManager {
 		try {
 			this.todos = JSON.parse(this.store.get('todos'))
 		} catch {
-			console.log('problem getting saved todos...')
+			printErrorMessage('Failed to retrieve saved tasks...')
 		}
 	}
 
