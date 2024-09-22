@@ -4,11 +4,11 @@
 import Conf from 'conf'
 
 /* local imports */
-import { initCLI } from './utils/cliUtils.js'
-import { TodoManager } from './utils/TodoManager.js'
-import { printBox, printTitle, printTodoList } from './utils/printUtils.js'
-import { getMenuSelectionPrompt } from './utils/promptUtils.js'
-import { handleMenuSelection } from './utils/actionUtils.js'
+import { initCLI } from '../utils/cliUtils.js'
+import { TodoManager } from '../utils/TodoManager.js'
+import { printBox, printTitle, printTodoList } from '../utils/printUtils.js'
+import { getMenuSelectionPrompt } from '../utils/promptUtils.js'
+import { handleMenuSelection } from '../utils/actionUtils.js'
 
 const store = new Conf({
 	projectName: 'todo',
@@ -19,6 +19,7 @@ const store = new Conf({
 		},
 	},
 })
+
 const todoManager = new TodoManager(store)
 
 const program = initCLI(todoManager)
