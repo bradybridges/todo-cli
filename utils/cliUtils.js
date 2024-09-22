@@ -16,7 +16,7 @@ const programInformation = {
 	version: '1.0.0',
 }
 
-const initProgramInformation = (program, todoManager) => {
+const initProgramInformation = (program) => {
 	program
 		.name(programInformation.name)
 		.description(programInformation.description)
