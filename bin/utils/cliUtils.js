@@ -114,6 +114,36 @@ const initChooseDeleteTasksCommand = (program, todoManager) => {
 		})
 }
 
+const initMarkCompleteCommand = (program, todoManager) => {
+	program
+		.command('mark-complete')
+		.description(
+			'Choose tasks to mark as complete. Expects task IDs separated by space.'
+		)
+		.option('-t --tasks <tasks...>', 'Tasks to mark as complete')
+		.action(({ tasks }) => {
+			console.log('tasks: ', tasks)
+			try {
+				const updatedTodos = todoManager.todos.map((todo, index) => {
+					if (tasks.includes(String(index + 1))) {
+						todo.complete = true
+					}
+
+					return todo
+				})
+
+				todoManager.updateTodos(updatedTodos)
+				printSuccessMessage(
+					'Successfully marked tasks as complete. Expects task IDs separated by space.'
+				)
+			} catch {
+				printErrorMessage(
+					'Failed to mark tasks as complete. Invalid format. Expecting format "1 2 3"'
+				)
+			}
+		})
+}
+
 const initCLI = (todoManager) => {
 	const program = new commander.Command()
 
@@ -123,6 +153,7 @@ const initCLI = (todoManager) => {
 	initListTasksCommand(program, todoManager)
 	initClearCompletedTasksCommand(program, todoManager)
 	initChooseDeleteTasksCommand(program, todoManager)
+	initMarkCompleteCommand(program, todoManager)
 
 	return program
 }
