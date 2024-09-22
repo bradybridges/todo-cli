@@ -144,6 +144,31 @@ const initMarkCompleteCommand = (program, todoManager) => {
 		})
 }
 
+const initMarkIncompleteCommand = (program, todoManager) => {
+	program
+		.command('mark-incomplete')
+		.description('Choose tasks to mark as incomplete')
+		.option('-t --tasks <tasks...>', 'Tasks to mark as incomplete')
+		.action(({ tasks }) => {
+			try {
+				const updatedTodos = todoManager.todos.map((todo, index) => {
+					if (tasks.includes(String(index + 1))) {
+						todo.complete = false
+					}
+
+					return todo
+				})
+
+				todoManager.updateTodos(updatedTodos)
+				printSuccessMessage('Successfully marked tasks as incomplete')
+			} catch {
+				printErrorMessage(
+					'Failed to mark tasks as incomplete. Invalid format. Expecting format "1 2 3"'
+				)
+			}
+		})
+}
+
 const initCLI = (todoManager) => {
 	const program = new commander.Command()
 
@@ -154,6 +179,7 @@ const initCLI = (todoManager) => {
 	initClearCompletedTasksCommand(program, todoManager)
 	initChooseDeleteTasksCommand(program, todoManager)
 	initMarkCompleteCommand(program, todoManager)
+	initMarkIncompleteCommand(program, todoManager)
 
 	return program
 }
