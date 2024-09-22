@@ -133,11 +133,11 @@ const initMarkCompleteCommand = (program, todoManager) => {
 
 				todoManager.updateTodos(updatedTodos)
 				printSuccessMessage(
-					'Successfully marked tasks as complete. Expects task IDs separated by space.'
+					'Successfully marked tasks as complete'
 				)
 			} catch {
 				printErrorMessage(
-					'Failed to mark tasks as complete. Invalid format. Expecting format "1 2 3"'
+					'Failed to mark tasks as complete. Invalid format. $ todo mark-complete -t 1 2 3'
 				)
 			}
 		})
@@ -164,7 +164,7 @@ const initMarkIncompleteCommand = (program, todoManager) => {
 				printSuccessMessage('Successfully marked tasks as incomplete')
 			} catch {
 				printErrorMessage(
-					'Failed to mark tasks as incomplete. Invalid format. Expecting format "1 2 3"'
+					'Failed to mark tasks as incomplete. Ex: $ todo mark-incomplete -t 1 2 3'
 				)
 			}
 		})
