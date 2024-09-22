@@ -87,30 +87,25 @@ const initChooseDeleteTasksCommand = (program, todoManager) => {
 	program
 		.command('delete')
 		.description('Choose tasks to delete')
-		.argument(
-			'<string>',
-			'Enter IDs of tasks to delete in a comma separated list'
+		.option(
+			'-t --tasks <tasks...>',
+			'Tasks to delete. Expects task IDs separated by space.'
 		)
-		.action((todoIds) => {
+		.action(({ tasks }) => {
 			try {
-				const ids = todoIds.split(',')
-
-				if (!ids.length) {
-					return
-				}
+				if (!tasks) throw new Error()
 
 				const updatedTodos = todoManager.todos.filter(
-					(todo, index) => !ids.includes(String(index + 1))
+					(todo, index) => !tasks.includes(String(index + 1))
 				)
 				todoManager.updateTodos(updatedTodos)
 
 				printSuccessMessage('Tasks deleted successfully')
 			} catch {
 				printErrorMessage(
-					'Failed to delete tasks. Invalid format. Expecting format "1,2,3"'
+					'Failed to delete tasks. Invalid format. $ todo mark-complete -t 1 2 3'
 				)
 			}
-			console.log('TODO IDS: ', todoIds)
 		})
 }
 
