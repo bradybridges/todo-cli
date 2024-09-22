@@ -70,10 +70,12 @@ const printBox = (text, options = {}, type = 'default') => {
 
 const printTodoList = (todos) => {
 	if (todos?.length) {
-		todos.forEach((todo) => {
-			const text = todo.complete
-				? greenItalicText(todo.label)
-				: redBoldText(todo.label)
+		todos.forEach((todo, index) => {
+			const text = `${index + 1}. ${todo.label}`
+			const styledText = todo.complete
+				? greenItalicText(text)
+				: redBoldText(text)
+
 			const boxenConfig = {
 				borderColor: todo.complete ? baseGreen : baseRed,
 				borderStyle: 'round',
@@ -83,7 +85,7 @@ const printTodoList = (todos) => {
 				width: 60,
 			}
 
-			console.log(boxen(text, boxenConfig))
+			console.log(boxen(styledText, boxenConfig))
 		})
 		console.log('\n')
 	} else {
