@@ -6,6 +6,8 @@ import { confirmPrompt } from './promptUtils.js'
 import {
 	printErrorMessage,
 	printSuccessMessage,
+	printTitle,
+	printTodoList,
 } from './printUtils.js'
 
 const programInformation = {
@@ -58,12 +60,24 @@ const initClearTasksCommand = (program, todoManager) => {
 		})
 }
 
+const initListTasksCommand = (program, todoManager) => {
+	program
+		.command('list')
+		.description('List tasks')
+		.action(() => {
+			printTitle(todoManager.todos)
+			printTodoList(todoManager.todos)
+		})
+}
+
 const initCLI = (todoManager) => {
 	const program = new commander.Command()
 
 	initProgramInformation(program, todoManager)
 	initAddTaskCommand(program, todoManager)
 	initClearTasksCommand(program, todoManager)
+	initListTasksCommand(program, todoManager)
+
 	return program
 }
 
