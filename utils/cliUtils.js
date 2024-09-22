@@ -115,9 +115,11 @@ const initMarkCompleteCommand = (program, todoManager) => {
 		.description(
 			'Choose tasks to mark as complete. Expects task IDs separated by space.'
 		)
-		.option('-t --tasks <tasks...>', 'Tasks to mark as complete')
+		.option(
+			'-t --tasks <tasks...>',
+			'Tasks to mark as complete. Expects task IDs separated by space.'
+		)
 		.action(({ tasks }) => {
-			console.log('tasks: ', tasks)
 			try {
 				const updatedTodos = todoManager.todos.map((todo, index) => {
 					if (tasks.includes(String(index + 1))) {
