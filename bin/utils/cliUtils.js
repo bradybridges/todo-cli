@@ -1,6 +1,8 @@
 /* external imports */
 import * as commander from 'commander'
 
+/* internal imports */
+import { confirmPrompt } from './promptUtils.js'
 import {
 	printErrorMessage,
 	printSuccessMessage,
@@ -38,11 +40,30 @@ const initAddTaskCommand = (program, todoManager) => {
 		})
 }
 
+const initClearTasksCommand = (program, todoManager) => {
+	program
+		.command('clear')
+		.description('Clear all tasks')
+		.action(async () => {
+			const confirmed = await confirmPrompt(
+				'Are you sure you want to clear all tasks?'
+			)
+
+			if (confirmed) {
+				todoManager.deleteTodos()
+				printSuccessMessage('Tasks cleared successfully')
+			} else {
+				printErrorMessage('Aborted clearing tasks')
+			}
+		})
+}
+
 const initCLI = (todoManager) => {
 	const program = new commander.Command()
 
 	initProgramInformation(program, todoManager)
 	initAddTaskCommand(program, todoManager)
+	initClearTasksCommand(program, todoManager)
 	return program
 }
 
