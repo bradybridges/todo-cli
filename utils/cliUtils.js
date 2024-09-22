@@ -121,6 +121,8 @@ const initMarkCompleteCommand = (program, todoManager) => {
 		)
 		.action(({ tasks }) => {
 			try {
+				if (!tasks) throw new Error()
+
 				const updatedTodos = todoManager.todos.map((todo, index) => {
 					if (tasks.includes(String(index + 1))) {
 						todo.complete = true
@@ -148,6 +150,8 @@ const initMarkIncompleteCommand = (program, todoManager) => {
 		.option('-t --tasks <tasks...>', 'Tasks to mark as incomplete')
 		.action(({ tasks }) => {
 			try {
+				if (!tasks) throw new Error()
+
 				const updatedTodos = todoManager.todos.map((todo, index) => {
 					if (tasks.includes(String(index + 1))) {
 						todo.complete = false
