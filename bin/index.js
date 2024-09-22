@@ -4,6 +4,7 @@
 import Conf from 'conf'
 
 /* local imports */
+import { initCLI } from './utils/cliUtils.js'
 import { TodoManager } from './utils/TodoManager.js'
 import { printBox, printTitle, printTodoList } from './utils/printUtils.js'
 import { getMenuSelectionPrompt } from './utils/promptUtils.js'
@@ -20,26 +21,36 @@ const store = new Conf({
 })
 const todoManager = new TodoManager(store)
 
-let runApplication = true
+const program = initCLI(todoManager)
 
-while (runApplication) {
-	try {
-		if (todoManager.todos.length) printTitle(todoManager.todos)
-		printTodoList(todoManager.todos)
+if (process.argv.length > 2) {
+	program.parse()
+} else {
+	let runApplication = true
 
-		const menuSelection = await getMenuSelectionPrompt()
+	while (runApplication) {
+		try {
+			if (todoManager.todos.length) printTitle(todoManager.todos)
+			printTodoList(todoManager.todos)
 
-		if (!menuSelection) {
+			const menuSelection = await getMenuSelectionPrompt()
+
+			if (!menuSelection) {
+				runApplication = false
+			}
+
+			await handleMenuSelection(menuSelection, todoManager)
+		} catch (e) {
+			printBox(
+				e,
+				{
+					title: 'Exiting due to an error',
+					titleAlignment: 'center',
+					borderColor: 'red',
+				},
+				'error'
+			)
 			runApplication = false
 		}
-
-		await handleMenuSelection(menuSelection, todoManager)
-	} catch (e) {
-		printBox(e, {
-			title: 'Exiting due to an error',
-			titleAlignment: 'center',
-			borderColor: 'red',
-		}, 'error')
-		runApplication = false
 	}
 }
