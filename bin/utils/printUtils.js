@@ -12,16 +12,6 @@ const redBoldText = chalk.hex(baseRed).bold
 const yellowBoldText = chalk.hex(baseYellow).bold
 
 const boxWidth = 60
-const boxenOptions = {
-	borderColor: baseGreen,
-	borderStyle: 'double',
-	height: 1,
-	margin: 0,
-	padding: 1,
-	titleAlignment: 'center',
-	textAlignment: 'center',
-	width: boxWidth,
-}
 
 const printTitle = (todos) => {
 	const completedTodosCount = todos.filter((todo) => todo.complete).length
@@ -36,8 +26,20 @@ const printTitle = (todos) => {
 		title = 'No Todos Added'
 	}
 
+	const boxenTitleOptions = {
+		borderColor: baseGreen,
+		borderStyle: 'double',
+		height: 1,
+		margin: 0,
+		padding: 1,
+		title,
+		titleAlignment: 'center',
+		textAlignment: 'center',
+		width: boxWidth,
+	}
+
 	console.log('\n')
-	console.log(boxen(msg, { ...boxenOptions, title }))
+	console.log(boxen(msg, { ...boxenTitleOptions, title }))
 }
 
 const printBox = (text, options = {}, type = 'default') => {
@@ -48,7 +50,7 @@ const printBox = (text, options = {}, type = 'default') => {
 		margin: 0,
 		padding: 1,
 		textAlignment: 'center',
-		width: 60,
+		width: boxWidth,
 		...options,
 	}
 	const textTypes = {
@@ -74,16 +76,16 @@ const printTodoList = (todos) => {
 			const text = todo.complete
 				? greenItalicText(todo.label)
 				: redBoldText(todo.label)
-			const boxenConfig = {
+			const todoBoxenConfig = {
 				borderColor: todo.complete ? baseGreen : baseRed,
 				borderStyle: 'round',
+				padding: { top: 0, right: 1, bottom: 0, left: 1 },
 				textAlignment: 'left',
 				title: todo.complete ? 'Complete' : 'Incomplete',
 				titleAlignment: 'right',
-				width: 60,
 			}
 
-			console.log(boxen(text, boxenConfig))
+			console.log(boxen(text, todoBoxenConfig))
 		})
 		console.log('\n')
 	} else {
