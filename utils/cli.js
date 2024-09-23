@@ -9,6 +9,7 @@ import {
 	printTitle,
 	printTodoList,
 } from './print.js'
+import { TodoManager } from './TodoManager.js'
 
 const programInformation = {
 	name: 'todo-cli',
@@ -170,8 +171,9 @@ const initMarkIncompleteCommand = (program, todoManager) => {
 		})
 }
 
-const initCLI = (todoManager) => {
+const initCLI = () => {
 	const program = new commander.Command()
+	const todoManager = new TodoManager()
 
 	initProgramInformation(program, todoManager)
 	initAddTaskCommand(program, todoManager)
