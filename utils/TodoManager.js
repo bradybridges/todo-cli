@@ -1,8 +1,9 @@
-import { printErrorMessage } from './printUtils.js'
+import { printErrorMessage } from './print.js'
+import { getStore } from './store.js'
 
 export class TodoManager {
-	constructor(store) {
-		this.store = store
+	constructor() {
+		this.store = getStore()
 		this.todos = []
 		this.#initTodos()
 	}

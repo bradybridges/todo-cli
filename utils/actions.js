@@ -2,13 +2,13 @@ import {
 	printBox,
 	printErrorMessage,
 	printSuccessMessage,
-} from '../utils/printUtils.js'
+} from './print.js'
 import {
 	confirmPrompt,
 	deleteTodosPrompt,
 	getNewTodoPrompt,
 	updateTodosPrompt,
-} from '../utils/promptUtils.js'
+} from './prompts.js'
 
 const handleMenuSelection = async (selection, todosManager) => {
 	switch (selection) {

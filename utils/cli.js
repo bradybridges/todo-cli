@@ -2,13 +2,13 @@
 import * as commander from 'commander'
 
 /* internal imports */
-import { confirmPrompt } from './promptUtils.js'
+import { confirmPrompt } from './prompts.js'
 import {
 	printErrorMessage,
 	printSuccessMessage,
 	printTitle,
 	printTodoList,
-} from './printUtils.js'
+} from './print.js'
 
 const programInformation = {
 	name: 'todo-cli',
