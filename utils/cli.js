@@ -184,7 +184,7 @@ const initCLI = () => {
 	initMarkCompleteCommand(program, todoManager)
 	initMarkIncompleteCommand(program, todoManager)
 
-	return program
+	program.parse()
 }
 
 export { initCLI }
