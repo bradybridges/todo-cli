@@ -113,7 +113,7 @@ const initMarkCompleteCommand = (program, todoManager) => {
 	program
 		.command('mark-complete')
 		.description(
-			'Choose tasks to mark as complete. Expects task IDs separated by space.'
+			'Choose tasks to mark as complete'
 		)
 		.option(
 			'-t --tasks <tasks...>',
@@ -147,7 +147,7 @@ const initMarkIncompleteCommand = (program, todoManager) => {
 	program
 		.command('mark-incomplete')
 		.description('Choose tasks to mark as incomplete')
-		.option('-t --tasks <tasks...>', 'Tasks to mark as incomplete')
+		.option('-t --tasks <tasks...>', 'Tasks to mark as incomplete. Expects task IDs separated by space.')
 		.action(({ tasks }) => {
 			try {
 				if (!tasks) throw new Error()
