@@ -7,10 +7,9 @@ import { getMenuSelectionPrompt } from '../utils/prompts.js'
 import { handleMenuSelection } from '../utils/actions.js'
 
 const todoManager = new TodoManager()
-const program = initCLI(todoManager)
 
 if (process.argv.length > 2) {
-	program.parse()
+	initCLI()
 } else {
 	let runApplication = true
 
