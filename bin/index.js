@@ -1,12 +1,10 @@
 #! /usr/bin/env node
 
-import { initCLI } from '../utils/cliUtils.js'
+import { initCLI } from '../utils/cli.js'
 import { TodoManager } from '../utils/TodoManager.js'
-import { printBox, printTitle, printTodoList } from '../utils/printUtils.js'
-import { getMenuSelectionPrompt } from '../utils/promptUtils.js'
-import { handleMenuSelection } from '../utils/actionUtils.js'
-
-
+import { printBox, printTitle, printTodoList } from '../utils/print.js'
+import { getMenuSelectionPrompt } from '../utils/prompts.js'
+import { handleMenuSelection } from '../utils/actions.js'
 
 const todoManager = new TodoManager()
 const program = initCLI(todoManager)
