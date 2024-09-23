@@ -1,6 +1,9 @@
+import { printErrorMessage } from './print.js'
+import { getStore } from './store.js'
+
 export class TodoManager {
-	constructor(store) {
-		this.store = store
+	constructor() {
+		this.store = getStore()
 		this.todos = []
 		this.#initTodos()
 	}
@@ -9,7 +12,7 @@ export class TodoManager {
 		try {
 			this.todos = JSON.parse(this.store.get('todos'))
 		} catch {
-			console.log('problem getting saved todos...')
+			printErrorMessage('Failed to retrieve saved tasks...')
 		}
 	}
 
