@@ -79,6 +79,21 @@ const printTodoList = (todos) => {
 			const todoBoxenConfig = {
 				borderColor: todo.complete ? baseGreen : baseRed,
 				borderStyle: 'round',
+				fullscreen: () => {
+					const todoLength = todo.label.length
+					let height = 2;
+
+					if (todoLength >= (boxWidth - 4) && todoLength < (boxWidth - 4 * 2)) {
+						height = 4;
+					} else {
+						height = Math.ceil(todoLength / 30);
+					}
+
+					return [
+						boxWidth,
+						height,
+					]
+				},
 				padding: { top: 0, right: 1, bottom: 0, left: 1 },
 				textAlignment: 'left',
 				title: todo.complete ? 'Complete' : 'Incomplete',
