@@ -49,4 +49,9 @@ export class TodoManager {
 		this.todos = []
 		this.#saveTodos()
 	}
+
+	updateSettings(updatedSettings) {
+		this.settings = updatedSettings
+		this.store.set('settings', updatedSettings)
+	}
 }
