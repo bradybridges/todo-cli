@@ -5,8 +5,8 @@ const storeConfig = {
 	projectName: 'todo',
 	schema: {
 		todos: {
-			type: 'string',
-			default: '[]',
+			type: 'array',
+			default: [],
 		},
 	},
 }
