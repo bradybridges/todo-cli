@@ -5,7 +5,9 @@ export class TodoManager {
 	constructor() {
 		this.store = getStore()
 		this.todos
+		this.settings
 		this.#initTodos()
+		this.#initSettings()
 	}
 
 	#initTodos() {
@@ -13,6 +15,16 @@ export class TodoManager {
 			this.todos = this.store.get('todos')
 		} catch {
 			printErrorMessage('Failed to retrieve saved tasks...')
+		}
+	}
+
+	#initSettings() {
+		try {
+			this.settings = this.store.get('settings')
+			console.log('settings: ', this.settings)
+		} catch {
+			// TODO: Set default settings on failure
+			printErrorMessage('Failed to retrieve saved settings...')
 		}
 	}
 
