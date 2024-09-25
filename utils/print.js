@@ -23,11 +23,12 @@ const boxenOptions = {
 	width: boxWidth,
 }
 
-const printTitle = (todos) => {
+const printTitle = (todoManager) => {
+	const todos = todoManager.todos;
 	const completedTodosCount = todos.filter((todo) => todo.complete).length
 	const incompleteTodosCount = todos.filter((todo) => !todo.complete).length
 
-	const msg = greenBoldText('TODO LIST')
+	const msg = greenBoldText(todoManager.settings.headerTitle)
 	let title
 
 	if (completedTodosCount > 0 || incompleteTodosCount > 0) {
