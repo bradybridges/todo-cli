@@ -64,6 +64,38 @@ const deleteTodosPrompt = async (todosManager) => {
 	})
 }
 
+const getUpdatedSettingsPrompt = async (todosManager) => {
+	const updatedSettings = todosManager.settings
+	const updatedHeaderTitle = await input({
+		message: 'Enter the application title: ',
+	})
+	const updatedNoTasksMessage = await input({
+		message:
+			'Enter the message you would like to see when there are no tasks found: ',
+	})
+	updatedSettings.disableExitMessage = await confirmPrompt(
+		'Would you to see a message when exiting the GUI?'
+	)
+
+	if (updatedHeaderTitle) {
+		updatedSettings.headerTitle = updatedHeaderTitle
+	}
+
+	if (updatedNoTasksMessage) {
+		updatedSettings.noTasksMessage = updatedNoTasksMessage
+	}
+
+	if (updatedSettings.disableExitMessage) {
+		const updatedExitMessage = await input({
+			message: 'Enter exit message',
+		})
+
+		if (updatedExitMessage) updatedSettings.exitMessage = updatedExitMessage
+	}
+
+	return updatedSettings
+}
+
 const confirmPrompt = async (message) => {
 	return await confirm({ message })
 }
@@ -73,5 +105,6 @@ export {
 	getNewTodoPrompt,
 	updateTodosPrompt,
 	deleteTodosPrompt,
+	getUpdatedSettingsPrompt,
 	confirmPrompt,
 }
