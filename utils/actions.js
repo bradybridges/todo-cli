@@ -1,13 +1,10 @@
-import {
-	printBox,
-	printErrorMessage,
-	printSuccessMessage,
-} from './print.js'
+import { printBox, printErrorMessage, printSuccessMessage } from './print.js'
 import {
 	confirmPrompt,
 	deleteTodosPrompt,
 	getNewTodoPrompt,
 	updateTodosPrompt,
+	getUpdatedSettingsPrompt,
 } from './prompts.js'
 
 const handleMenuSelection = async (selection, todosManager) => {
@@ -24,9 +21,12 @@ const handleMenuSelection = async (selection, todosManager) => {
 		case 'clear':
 			await handleClearTodos(todosManager)
 			break
+		case 'settings':
+			await handleUpdateSettings(todosManager)
+			break
 		default:
 			printBox(
-				'Godspeed, friend',
+				todosManager.settings.exitMessage,
 				{
 					title: 'Exiting',
 					titleAlignment: 'center',
@@ -104,6 +104,12 @@ const handleAddTodo = async (todosManager) => {
 	if (newTodo) {
 		todosManager.addTodo(newTodo)
 	}
+}
+
+const handleUpdateSettings = async (todosManager) => {
+	const updatedSettings = await getUpdatedSettingsPrompt(todosManager)
+	console.log('updated settings: ', updatedSettings)
+	todosManager.updateSettings(updatedSettings)
 }
 
 export { handleMenuSelection, handleAddTodo }
