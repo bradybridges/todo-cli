@@ -4,13 +4,13 @@ import { getStore } from './store.js'
 export class TodoManager {
 	constructor() {
 		this.store = getStore()
-		this.todos = []
+		this.todos
 		this.#initTodos()
 	}
 
 	#initTodos() {
 		try {
-			this.todos = JSON.parse(this.store.get('todos'))
+			this.todos = this.store.get('todos')
 		} catch {
 			printErrorMessage('Failed to retrieve saved tasks...')
 		}
