@@ -17,7 +17,7 @@ export class TodoManager {
 	}
 
 	#saveTodos() {
-		this.store.set('todos', JSON.stringify(this.todos))
+		this.store.set('todos', this.todos)
 	}
 
 	addTodo(todo) {
