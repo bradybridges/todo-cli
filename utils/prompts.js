@@ -38,10 +38,10 @@ const getNewTodoPrompt = async () => {
 	return await input({ message: 'Enter new todo: ' })
 }
 
-const updateTodosPrompt = async (todosManager) => {
+const updateTodosPrompt = async (storeManager) => {
 	return await checkbox({
 		message: 'Update status of tasks: ',
-		choices: todosManager.todos.map((todo) => {
+		choices: storeManager.todos.map((todo) => {
 			return {
 				name: todo.label,
 				value: todo.label,
@@ -51,10 +51,10 @@ const updateTodosPrompt = async (todosManager) => {
 	})
 }
 
-const deleteTodosPrompt = async (todosManager) => {
+const deleteTodosPrompt = async (storeManager) => {
 	return await checkbox({
 		message: 'Select tasks to delete: ',
-		choices: todosManager.todos.map((todo) => {
+		choices: storeManager.todos.map((todo) => {
 			return {
 				name: `${todo.label} - ${todo.complete ? 'complete' : 'incomplete'}`,
 				value: todo.label,
@@ -64,8 +64,8 @@ const deleteTodosPrompt = async (todosManager) => {
 	})
 }
 
-const getUpdatedSettingsPrompt = async (todosManager) => {
-	const updatedSettings = todosManager.settings
+const getUpdatedSettingsPrompt = async (storeManager) => {
+	const updatedSettings = storeManager.settings
 	const updatedHeaderTitle = await input({
 		message: 'Enter the application title: ',
 	})

@@ -23,12 +23,12 @@ const boxenOptions = {
 	width: boxWidth,
 }
 
-const printTitle = (todoManager) => {
-	const todos = todoManager.todos
+const printTitle = (storeManager) => {
+	const todos = storeManager.todos
 	const completedTodosCount = todos.filter((todo) => todo.complete).length
 	const incompleteTodosCount = todos.filter((todo) => !todo.complete).length
 
-	const msg = greenBoldText(todoManager.settings.headerTitle)
+	const msg = greenBoldText(storeManager.settings.headerTitle)
 	let title
 
 	if (completedTodosCount > 0 || incompleteTodosCount > 0) {
@@ -69,8 +69,8 @@ const printBox = (text, options = {}, type = 'default') => {
 	console.log('\n')
 }
 
-const printTodoList = (todoManager) => {
-	const todos = todoManager.todos
+const printTodoList = (storeManager) => {
+	const todos = storeManager.todos
 
 	if (todos?.length) {
 		todos.forEach((todo, index) => {
@@ -92,7 +92,7 @@ const printTodoList = (todoManager) => {
 		})
 		console.log('\n')
 	} else {
-		const settings = todoManager.settings
+		const settings = storeManager.settings
 
 		printBox(
 			settings.noTasksMessage,
