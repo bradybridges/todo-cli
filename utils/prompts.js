@@ -96,6 +96,28 @@ const getUpdatedSettingsPrompt = async (todosManager) => {
 	return updatedSettings
 }
 
+const getSettingsSubMenuSelection = async () => {
+	const selection = await select({
+		message: 'What would you like to do?',
+		choices: [
+			{
+				name: 'Update Settings',
+				value: 'update-settings',
+			},
+			{
+				name: 'Restore Default Settings',
+				value: 'restore-default-settings',
+			},
+			{
+				name: 'Go Back',
+				value: 'back',
+			},
+		],
+	})
+
+	return selection
+}
+
 const confirmPrompt = async (message) => {
 	return await confirm({ message })
 }
@@ -106,5 +128,6 @@ export {
 	updateTodosPrompt,
 	deleteTodosPrompt,
 	getUpdatedSettingsPrompt,
+	getSettingsSubMenuSelection,
 	confirmPrompt,
 }
