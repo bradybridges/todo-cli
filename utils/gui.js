@@ -10,7 +10,7 @@ export const displayGUI = async () => {
 	while (displayGUI) {
 		try {
 			if (todoManager.todos.length) printTitle(todoManager)
-			printTodoList(todoManager.todos)
+			printTodoList(todoManager)
 
 			const menuSelection = await getMenuSelectionPrompt()
 

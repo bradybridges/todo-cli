@@ -67,7 +67,7 @@ const initListTasksCommand = (program, todoManager) => {
 		.description('List tasks')
 		.action(() => {
 			if (todoManager.todos.length !== 0) printTitle(todoManager.todos)
-			printTodoList(todoManager.todos)
+			printTodoList(todoManager)
 		})
 }
 

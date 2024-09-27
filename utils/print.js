@@ -24,7 +24,7 @@ const boxenOptions = {
 }
 
 const printTitle = (todoManager) => {
-	const todos = todoManager.todos;
+	const todos = todoManager.todos
 	const completedTodosCount = todos.filter((todo) => todo.complete).length
 	const incompleteTodosCount = todos.filter((todo) => !todo.complete).length
 
@@ -69,7 +69,9 @@ const printBox = (text, options = {}, type = 'default') => {
 	console.log('\n')
 }
 
-const printTodoList = (todos) => {
+const printTodoList = (todoManager) => {
+	const todos = todoManager.todos
+
 	if (todos?.length) {
 		todos.forEach((todo, index) => {
 			const text = `${index + 1}. ${todo.label}`
@@ -90,8 +92,10 @@ const printTodoList = (todos) => {
 		})
 		console.log('\n')
 	} else {
+		const settings = todoManager.settings
+
 		printBox(
-			'No TODOs found. Take the day off.',
+			settings.noTasksMessage,
 			{
 				title: 'NO TODOS',
 				titleAlignment: 'center',
