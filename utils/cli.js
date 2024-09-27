@@ -76,12 +76,16 @@ const initClearCompletedTasksCommand = (program, storeManager) => {
 	program
 		.command('clear-completed')
 		.description('Clear all completed tasks')
-		.action(() => {
-			const incompleteTodos = storeManager.todos.filter(
-				(todo) => !todo.complete
-			)
-			storeManager.updateTodos(incompleteTodos)
-			printSuccessMessage('Completed tasks cleared successfully')
+		.action(async () => {
+			const confirmClearCompleted = await confirmPrompt('Are you sure you want to clear all completed tasks?')
+
+			if (confirmClearCompleted) {
+				const incompleteTodos = storeManager.todos.filter(
+					(todo) => !todo.complete
+				)
+				storeManager.updateTodos(incompleteTodos)
+				printSuccessMessage('Completed tasks cleared successfully')
+			}
 		})
 }
 
