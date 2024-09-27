@@ -1,11 +1,12 @@
 import { printErrorMessage } from './print.js'
 import { getStore } from './store.js'
+import { defaultStoreSettings } from './store.js'
 
 export class StoreManager {
 	constructor() {
 		this.store = getStore()
-		this.todos
-		this.settings
+		this.todos = []
+		this.settings = defaultStoreSettings
 		this.#initTodos()
 		this.#initSettings()
 	}
@@ -22,7 +23,6 @@ export class StoreManager {
 		try {
 			this.settings = this.store.get('settings')
 		} catch {
-			// TODO: Set default settings on failure
 			printErrorMessage('Failed to retrieve saved settings...')
 		}
 	}
