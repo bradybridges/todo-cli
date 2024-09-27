@@ -1,5 +1,13 @@
 import Conf from 'conf'
 
+const defaultStoreSettings = {
+	disableExitMessage: false,
+	exitErrorMessage: 'Goodbye',
+	exitMessage: 'Godspeed, friend',
+	headerTitle: 'TODO LIST',
+	noTasksMessage: 'No TODOs found. Take the day off.',
+}
+
 const storeConfig = {
 	projectName: 'todo',
 	schema: {
@@ -9,15 +17,11 @@ const storeConfig = {
 		},
 		settings: {
 			type: 'object',
-			default: {
-				disableExitMessage: false,
-				exitErrorMessage: 'Goodbye',
-				exitMessage: 'Godspeed, friend',
-				headerTitle: 'TODO LIST',
-				noTasksMessage: 'No TODOs found. Take the day off.',
-			},
+			default: defaultStoreSettings,
 		},
 	},
 }
 
-export const getStore = () => new Conf(storeConfig)
+const getStore = () => new Conf(storeConfig)
+
+export { defaultStoreSettings, getStore }
