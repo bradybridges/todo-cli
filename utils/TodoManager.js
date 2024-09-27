@@ -21,7 +21,6 @@ export class TodoManager {
 	#initSettings() {
 		try {
 			this.settings = this.store.get('settings')
-			console.log('settings: ', this.settings)
 		} catch {
 			// TODO: Set default settings on failure
 			printErrorMessage('Failed to retrieve saved settings...')
@@ -53,5 +52,10 @@ export class TodoManager {
 	updateSettings(updatedSettings) {
 		this.settings = updatedSettings
 		this.store.set('settings', updatedSettings)
+	}
+
+	restoreDefaultSettings() {
+		this.store.reset('settings')
+		this.settings = this.store.get('settings')
 	}
 }
