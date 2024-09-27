@@ -1,32 +1,33 @@
-import {
-	printBox,
-	printErrorMessage,
-	printSuccessMessage,
-} from './print.js'
+import { printBox, printErrorMessage, printSuccessMessage } from './print.js'
 import {
 	confirmPrompt,
 	deleteTodosPrompt,
 	getNewTodoPrompt,
 	updateTodosPrompt,
+	getUpdatedSettingsPrompt,
+	getSettingsSubMenuSelection,
 } from './prompts.js'
 
-const handleMenuSelection = async (selection, todosManager) => {
+const handleMenuSelection = async (selection, storeManager) => {
 	switch (selection) {
 		case 'add':
-			await handleAddTodo(todosManager)
+			await handleAddTodo(storeManager)
 			break
 		case 'update':
-			await handleUpdateTodos(todosManager)
+			await handleUpdateTodos(storeManager)
 			break
 		case 'delete':
-			await handleDeleteTodos(todosManager)
+			await handleDeleteTodos(storeManager)
 			break
 		case 'clear':
-			await handleClearTodos(todosManager)
+			await handleClearTodos(storeManager)
+			break
+		case 'settings':
+			await handleSettingsActions(storeManager)
 			break
 		default:
 			printBox(
-				'Godspeed, friend',
+				storeManager.settings.exitMessage,
 				{
 					title: 'Exiting',
 					titleAlignment: 'center',
@@ -36,13 +37,13 @@ const handleMenuSelection = async (selection, todosManager) => {
 	}
 }
 
-const handleUpdateTodos = async (todosManager) => {
-	if (todosManager.todos.length === 0) {
+const handleUpdateTodos = async (storeManager) => {
+	if (storeManager.todos.length === 0) {
 		printErrorMessage('There are no tasks to update')
 	} else {
-		const selectedTodos = await updateTodosPrompt(todosManager)
+		const selectedTodos = await updateTodosPrompt(storeManager)
 
-		const updatedTodos = todosManager.todos.map((todo) => {
+		const updatedTodos = storeManager.todos.map((todo) => {
 			let isComplete = todo.complete
 
 			if (!isComplete && selectedTodos.includes(todo.label)) {
@@ -57,12 +58,12 @@ const handleUpdateTodos = async (todosManager) => {
 			}
 		})
 
-		todosManager.updateTodos(updatedTodos)
+		storeManager.updateTodos(updatedTodos)
 	}
 }
 
-const handleDeleteTodos = async (todosManager) => {
-	if (todosManager.todos.length === 0) {
+const handleDeleteTodos = async (storeManager) => {
+	if (storeManager.todos.length === 0) {
 		printErrorMessage(
 			`Successfully deleted ${(Math.random() * 1000).toFixed()} tasks!`
 		)
@@ -77,33 +78,70 @@ const handleDeleteTodos = async (todosManager) => {
 			}, 1250)
 		})
 	} else {
-		const selectedTodos = await deleteTodosPrompt(todosManager)
-		const updatedTodos = todosManager.todos.filter(
+		const selectedTodos = await deleteTodosPrompt(storeManager)
+		const updatedTodos = storeManager.todos.filter(
 			(todo) => !selectedTodos.includes(todo.label)
 		)
 
-		todosManager.updateTodos(updatedTodos)
+		storeManager.updateTodos(updatedTodos)
 	}
 }
 
-const handleClearTodos = async (todosManager) => {
+const handleClearTodos = async (storeManager) => {
 	const confirmed = await confirmPrompt(
 		'Are you sure you want to delete all todo items?'
 	)
 
 	if (confirmed) {
-		todosManager.deleteTodos()
+		storeManager.deleteTodos()
 	} else {
 		printErrorMessage('Aborted deleting todos')
 	}
 }
 
-const handleAddTodo = async (todosManager) => {
+const handleAddTodo = async (storeManager) => {
 	const newTodo = await getNewTodoPrompt()
 
 	if (newTodo) {
-		todosManager.addTodo(newTodo)
+		storeManager.addTodo(newTodo)
 	}
 }
 
-export { handleMenuSelection, handleAddTodo }
+const handleUpdateSettings = async (storeManager) => {
+	const updatedSettings = await getUpdatedSettingsPrompt(storeManager)
+	const confirmUpdateSettings = await confirmPrompt('Update settings?')
+
+	if (confirmUpdateSettings) {
+		storeManager.updateSettings(updatedSettings)
+	}
+}
+
+const handleRestoreDefaultSettings = async (storeManager) => {
+	const confirmRestoreDefaultSettings = await confirmPrompt(
+		'Are you sure you want to restore default settings?'
+	)
+
+	if (confirmRestoreDefaultSettings) {
+		storeManager.restoreDefaultSettings()
+		printSuccessMessage('Default settings restored successfully')
+	} else {
+		printErrorMessage('Aborted restoring default settings')
+	}
+}
+
+const handleSettingsActions = async (storeManager) => {
+	const settingsAction = await getSettingsSubMenuSelection()
+
+	switch (settingsAction) {
+		case 'update-settings':
+			await handleUpdateSettings(storeManager)
+			break
+		case 'restore-default-settings':
+			await handleRestoreDefaultSettings(storeManager)
+			break
+		default:
+			break
+	}
+}
+
+export { handleMenuSelection, handleAddTodo, handleSettingsActions }

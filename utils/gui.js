@@ -1,16 +1,16 @@
-import { TodoManager } from '../utils/TodoManager.js'
+import { StoreManager } from '../utils/StoreManager.js'
 import { printBox, printTitle, printTodoList } from '../utils/print.js'
 import { getMenuSelectionPrompt } from '../utils/prompts.js'
 import { handleMenuSelection } from '../utils/actions.js'
 
 export const displayGUI = async () => {
 	let displayGUI = true
-	const todoManager = new TodoManager()
+	const storeManager = new StoreManager()
 
 	while (displayGUI) {
 		try {
-			if (todoManager.todos.length) printTitle(todoManager.todos)
-			printTodoList(todoManager.todos)
+			if (storeManager.todos.length) printTitle(storeManager)
+			printTodoList(storeManager)
 
 			const menuSelection = await getMenuSelectionPrompt()
 
@@ -18,7 +18,7 @@ export const displayGUI = async () => {
 				displayGUI = false
 			}
 
-			await handleMenuSelection(menuSelection, todoManager)
+			await handleMenuSelection(menuSelection, storeManager)
 		} catch (e) {
 			printBox(
 				e,

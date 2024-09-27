@@ -9,7 +9,8 @@ import {
 	printTitle,
 	printTodoList,
 } from './print.js'
-import { TodoManager } from './TodoManager.js'
+import { handleSettingsActions } from './actions.js'
+import { StoreManager } from './StoreManager.js'
 
 const programInformation = {
 	name: 'todo-cli',
@@ -17,7 +18,7 @@ const programInformation = {
 	version: '1.0.0',
 }
 
-const initProgramInformation = (program) => {
+const setProgramInformation = (program) => {
 	program
 		.name(programInformation.name)
 		.description(programInformation.description)
@@ -28,14 +29,14 @@ const initProgramInformation = (program) => {
 		)
 }
 
-const initAddTaskCommand = (program, todoManager) => {
+const initAddTaskCommand = (program, storeManager) => {
 	program
 		.command('add')
 		.description('Add a new task')
 		.argument('<string>', 'New task')
 		.action((newTodo) => {
 			if (newTodo && typeof newTodo === 'string') {
-				todoManager.addTodo(newTodo)
+				storeManager.addTodo(newTodo)
 				printSuccessMessage(`"${newTodo}" added successfully`)
 			} else {
 				printErrorMessage('Invalid task. String expected')
@@ -43,7 +44,7 @@ const initAddTaskCommand = (program, todoManager) => {
 		})
 }
 
-const initClearTasksCommand = (program, todoManager) => {
+const initClearTasksCommand = (program, storeManager) => {
 	program
 		.command('clear')
 		.description('Clear all tasks')
@@ -53,7 +54,7 @@ const initClearTasksCommand = (program, todoManager) => {
 			)
 
 			if (confirmed) {
-				todoManager.deleteTodos()
+				storeManager.deleteTodos()
 				printSuccessMessage('Tasks cleared successfully')
 			} else {
 				printErrorMessage('Aborted clearing tasks')
@@ -61,30 +62,34 @@ const initClearTasksCommand = (program, todoManager) => {
 		})
 }
 
-const initListTasksCommand = (program, todoManager) => {
+const initListTasksCommand = (program, storeManager) => {
 	program
 		.command('list')
 		.description('List tasks')
 		.action(() => {
-			if (todoManager.todos.length !== 0) printTitle(todoManager.todos)
-			printTodoList(todoManager.todos)
+			if (storeManager.todos.length !== 0) printTitle(storeManager)
+			printTodoList(storeManager)
 		})
 }
 
-const initClearCompletedTasksCommand = (program, todoManager) => {
+const initClearCompletedTasksCommand = (program, storeManager) => {
 	program
 		.command('clear-completed')
 		.description('Clear all completed tasks')
-		.action(() => {
-			const incompleteTodos = todoManager.todos.filter(
-				(todo) => !todo.complete
-			)
-			todoManager.updateTodos(incompleteTodos)
-			printSuccessMessage('Completed tasks cleared successfully')
+		.action(async () => {
+			const confirmClearCompleted = await confirmPrompt('Are you sure you want to clear all completed tasks?')
+
+			if (confirmClearCompleted) {
+				const incompleteTodos = storeManager.todos.filter(
+					(todo) => !todo.complete
+				)
+				storeManager.updateTodos(incompleteTodos)
+				printSuccessMessage('Completed tasks cleared successfully')
+			}
 		})
 }
 
-const initChooseDeleteTasksCommand = (program, todoManager) => {
+const initChooseDeleteTasksCommand = (program, storeManager) => {
 	program
 		.command('delete')
 		.description('Choose tasks to delete')
@@ -96,10 +101,10 @@ const initChooseDeleteTasksCommand = (program, todoManager) => {
 			try {
 				if (!tasks) throw new Error()
 
-				const updatedTodos = todoManager.todos.filter(
+				const updatedTodos = storeManager.todos.filter(
 					(todo, index) => !tasks.includes(String(index + 1))
 				)
-				todoManager.updateTodos(updatedTodos)
+				storeManager.updateTodos(updatedTodos)
 
 				printSuccessMessage('Tasks deleted successfully')
 			} catch {
@@ -110,12 +115,10 @@ const initChooseDeleteTasksCommand = (program, todoManager) => {
 		})
 }
 
-const initMarkCompleteCommand = (program, todoManager) => {
+const initMarkCompleteCommand = (program, storeManager) => {
 	program
 		.command('mark-complete')
-		.description(
-			'Choose tasks to mark as complete'
-		)
+		.description('Choose tasks to mark as complete')
 		.option(
 			'-t --tasks <tasks...>',
 			'Tasks to mark as complete. Expects task IDs separated by space.'
@@ -124,7 +127,7 @@ const initMarkCompleteCommand = (program, todoManager) => {
 			try {
 				if (!tasks) throw new Error()
 
-				const updatedTodos = todoManager.todos.map((todo, index) => {
+				const updatedTodos = storeManager.todos.map((todo, index) => {
 					if (tasks.includes(String(index + 1))) {
 						todo.complete = true
 					}
@@ -132,10 +135,8 @@ const initMarkCompleteCommand = (program, todoManager) => {
 					return todo
 				})
 
-				todoManager.updateTodos(updatedTodos)
-				printSuccessMessage(
-					'Successfully marked tasks as complete'
-				)
+				storeManager.updateTodos(updatedTodos)
+				printSuccessMessage('Successfully marked tasks as complete')
 			} catch {
 				printErrorMessage(
 					'Failed to mark tasks as complete. Invalid format. $ todo mark-complete -t 1 2 3'
@@ -144,16 +145,19 @@ const initMarkCompleteCommand = (program, todoManager) => {
 		})
 }
 
-const initMarkIncompleteCommand = (program, todoManager) => {
+const initMarkIncompleteCommand = (program, storeManager) => {
 	program
 		.command('mark-incomplete')
 		.description('Choose tasks to mark as incomplete')
-		.option('-t --tasks <tasks...>', 'Tasks to mark as incomplete. Expects task IDs separated by space.')
+		.option(
+			'-t --tasks <tasks...>',
+			'Tasks to mark as incomplete. Expects task IDs separated by space.'
+		)
 		.action(({ tasks }) => {
 			try {
 				if (!tasks) throw new Error()
 
-				const updatedTodos = todoManager.todos.map((todo, index) => {
+				const updatedTodos = storeManager.todos.map((todo, index) => {
 					if (tasks.includes(String(index + 1))) {
 						todo.complete = false
 					}
@@ -161,7 +165,7 @@ const initMarkIncompleteCommand = (program, todoManager) => {
 					return todo
 				})
 
-				todoManager.updateTodos(updatedTodos)
+				storeManager.updateTodos(updatedTodos)
 				printSuccessMessage('Successfully marked tasks as incomplete')
 			} catch {
 				printErrorMessage(
@@ -171,18 +175,28 @@ const initMarkIncompleteCommand = (program, todoManager) => {
 		})
 }
 
+const initSettingsCommand = (program, storeManager) => {
+	program
+		.command('settings')
+		.description('Update or reset gui settings')
+		.action(async () => {
+			await handleSettingsActions(storeManager)
+		})
+}
+
 const initCLI = () => {
 	const program = new commander.Command()
-	const todoManager = new TodoManager()
+	const storeManager = new StoreManager()
 
-	initProgramInformation(program, todoManager)
-	initAddTaskCommand(program, todoManager)
-	initClearTasksCommand(program, todoManager)
-	initListTasksCommand(program, todoManager)
-	initClearCompletedTasksCommand(program, todoManager)
-	initChooseDeleteTasksCommand(program, todoManager)
-	initMarkCompleteCommand(program, todoManager)
-	initMarkIncompleteCommand(program, todoManager)
+	setProgramInformation(program)
+	initAddTaskCommand(program, storeManager)
+	initClearTasksCommand(program, storeManager)
+	initListTasksCommand(program, storeManager)
+	initClearCompletedTasksCommand(program, storeManager)
+	initChooseDeleteTasksCommand(program, storeManager)
+	initMarkCompleteCommand(program, storeManager)
+	initMarkIncompleteCommand(program, storeManager)
+	initSettingsCommand(program, storeManager)
 
 	program.parse()
 }

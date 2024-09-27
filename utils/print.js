@@ -23,11 +23,12 @@ const boxenOptions = {
 	width: boxWidth,
 }
 
-const printTitle = (todos) => {
+const printTitle = (storeManager) => {
+	const todos = storeManager.todos
 	const completedTodosCount = todos.filter((todo) => todo.complete).length
 	const incompleteTodosCount = todos.filter((todo) => !todo.complete).length
 
-	const msg = greenBoldText('TODO LIST')
+	const msg = greenBoldText(storeManager.settings.headerTitle)
 	let title
 
 	if (completedTodosCount > 0 || incompleteTodosCount > 0) {
@@ -68,7 +69,9 @@ const printBox = (text, options = {}, type = 'default') => {
 	console.log('\n')
 }
 
-const printTodoList = (todos) => {
+const printTodoList = (storeManager) => {
+	const todos = storeManager.todos
+
 	if (todos?.length) {
 		todos.forEach((todo, index) => {
 			const text = `${index + 1}. ${todo.label}`
@@ -89,8 +92,10 @@ const printTodoList = (todos) => {
 		})
 		console.log('\n')
 	} else {
+		const settings = storeManager.settings
+
 		printBox(
-			'No TODOs found. Take the day off.',
+			settings.noTasksMessage,
 			{
 				title: 'NO TODOS',
 				titleAlignment: 'center',

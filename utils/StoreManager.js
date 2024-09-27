@@ -1,23 +1,34 @@
 import { printErrorMessage } from './print.js'
 import { getStore } from './store.js'
 
-export class TodoManager {
+export class StoreManager {
 	constructor() {
 		this.store = getStore()
-		this.todos = []
+		this.todos
+		this.settings
 		this.#initTodos()
+		this.#initSettings()
 	}
 
 	#initTodos() {
 		try {
-			this.todos = JSON.parse(this.store.get('todos'))
+			this.todos = this.store.get('todos')
 		} catch {
 			printErrorMessage('Failed to retrieve saved tasks...')
 		}
 	}
 
+	#initSettings() {
+		try {
+			this.settings = this.store.get('settings')
+		} catch {
+			// TODO: Set default settings on failure
+			printErrorMessage('Failed to retrieve saved settings...')
+		}
+	}
+
 	#saveTodos() {
-		this.store.set('todos', JSON.stringify(this.todos))
+		this.store.set('todos', this.todos)
 	}
 
 	addTodo(todo) {
@@ -36,5 +47,15 @@ export class TodoManager {
 	deleteTodos() {
 		this.todos = []
 		this.#saveTodos()
+	}
+
+	updateSettings(updatedSettings) {
+		this.settings = updatedSettings
+		this.store.set('settings', updatedSettings)
+	}
+
+	restoreDefaultSettings() {
+		this.store.reset('settings')
+		this.settings = this.store.get('settings')
 	}
 }
