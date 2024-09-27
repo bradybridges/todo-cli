@@ -21,7 +21,7 @@ const getMenuSelectionPrompt = async () => {
 				value: 'clear',
 			},
 			{
-				name: 'Update Settings',
+				name: 'Settings',
 				value: 'settings',
 			},
 			{

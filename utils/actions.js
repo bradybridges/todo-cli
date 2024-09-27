@@ -5,6 +5,7 @@ import {
 	getNewTodoPrompt,
 	updateTodosPrompt,
 	getUpdatedSettingsPrompt,
+	getSettingsSubMenuSelection,
 } from './prompts.js'
 
 const handleMenuSelection = async (selection, todosManager) => {
@@ -22,7 +23,7 @@ const handleMenuSelection = async (selection, todosManager) => {
 			await handleClearTodos(todosManager)
 			break
 		case 'settings':
-			await handleUpdateSettings(todosManager)
+			await handleSettingsActions(todosManager)
 			break
 		default:
 			printBox(
@@ -108,8 +109,39 @@ const handleAddTodo = async (todosManager) => {
 
 const handleUpdateSettings = async (todosManager) => {
 	const updatedSettings = await getUpdatedSettingsPrompt(todosManager)
-	console.log('updated settings: ', updatedSettings)
-	todosManager.updateSettings(updatedSettings)
+	const confirmUpdateSettings = await confirmPrompt('Update settings?')
+
+	if (confirmUpdateSettings) {
+		todosManager.updateSettings(updatedSettings)
+	}
 }
 
-export { handleMenuSelection, handleAddTodo }
+const handleRestoreDefaultSettings = async (todosManager) => {
+	const confirmRestoreDefaultSettings = await confirmPrompt(
+		'Are you sure you want to restore default settings?'
+	)
+
+	if (confirmRestoreDefaultSettings) {
+		todosManager.restoreDefaultSettings()
+		printSuccessMessage('Default settings restored successfully')
+	} else {
+		printErrorMessage('Aborted restoring default settings')
+	}
+}
+
+const handleSettingsActions = async (todosManager) => {
+	const settingsAction = await getSettingsSubMenuSelection()
+
+	switch (settingsAction) {
+		case 'update-settings':
+			await handleUpdateSettings(todosManager)
+			break
+		case 'restore-default-settings':
+			await handleRestoreDefaultSettings(todosManager)
+			break
+		default:
+			break
+	}
+}
+
+export { handleMenuSelection, handleAddTodo, handleUpdateSettings }
