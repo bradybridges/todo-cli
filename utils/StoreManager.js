@@ -1,7 +1,7 @@
 import { printErrorMessage } from './print.js'
 import { getStore } from './store.js'
 
-export class TodoManager {
+export class StoreManager {
 	constructor() {
 		this.store = getStore()
 		this.todos
