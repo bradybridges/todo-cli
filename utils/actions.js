@@ -144,4 +144,4 @@ const handleSettingsActions = async (todosManager) => {
 	}
 }
 
-export { handleMenuSelection, handleAddTodo, handleUpdateSettings }
+export { handleMenuSelection, handleAddTodo, handleSettingsActions }

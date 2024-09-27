@@ -9,6 +9,7 @@ import {
 	printTitle,
 	printTodoList,
 } from './print.js'
+import { handleSettingsActions } from './actions.js'
 import { TodoManager } from './TodoManager.js'
 
 const programInformation = {
@@ -17,7 +18,7 @@ const programInformation = {
 	version: '1.0.0',
 }
 
-const initProgramInformation = (program) => {
+const setProgramInformation = (program) => {
 	program
 		.name(programInformation.name)
 		.description(programInformation.description)
@@ -113,9 +114,7 @@ const initChooseDeleteTasksCommand = (program, todoManager) => {
 const initMarkCompleteCommand = (program, todoManager) => {
 	program
 		.command('mark-complete')
-		.description(
-			'Choose tasks to mark as complete'
-		)
+		.description('Choose tasks to mark as complete')
 		.option(
 			'-t --tasks <tasks...>',
 			'Tasks to mark as complete. Expects task IDs separated by space.'
@@ -133,9 +132,7 @@ const initMarkCompleteCommand = (program, todoManager) => {
 				})
 
 				todoManager.updateTodos(updatedTodos)
-				printSuccessMessage(
-					'Successfully marked tasks as complete'
-				)
+				printSuccessMessage('Successfully marked tasks as complete')
 			} catch {
 				printErrorMessage(
 					'Failed to mark tasks as complete. Invalid format. $ todo mark-complete -t 1 2 3'
@@ -148,7 +145,10 @@ const initMarkIncompleteCommand = (program, todoManager) => {
 	program
 		.command('mark-incomplete')
 		.description('Choose tasks to mark as incomplete')
-		.option('-t --tasks <tasks...>', 'Tasks to mark as incomplete. Expects task IDs separated by space.')
+		.option(
+			'-t --tasks <tasks...>',
+			'Tasks to mark as incomplete. Expects task IDs separated by space.'
+		)
 		.action(({ tasks }) => {
 			try {
 				if (!tasks) throw new Error()
@@ -171,11 +171,20 @@ const initMarkIncompleteCommand = (program, todoManager) => {
 		})
 }
 
+const initSettingsCommand = (program, todoManager) => {
+	program
+		.command('settings')
+		.description('Update or reset gui settings')
+		.action(async () => {
+			await handleSettingsActions(todoManager)
+		})
+}
+
 const initCLI = () => {
 	const program = new commander.Command()
 	const todoManager = new TodoManager()
 
-	initProgramInformation(program, todoManager)
+	setProgramInformation(program)
 	initAddTaskCommand(program, todoManager)
 	initClearTasksCommand(program, todoManager)
 	initListTasksCommand(program, todoManager)
@@ -183,6 +192,7 @@ const initCLI = () => {
 	initChooseDeleteTasksCommand(program, todoManager)
 	initMarkCompleteCommand(program, todoManager)
 	initMarkIncompleteCommand(program, todoManager)
+	initSettingsCommand(program, todoManager)
 
 	program.parse()
 }
