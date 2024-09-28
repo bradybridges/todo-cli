@@ -69,9 +69,10 @@ const getUpdatedSettingsPrompt = async (storeManager) => {
 		message:
 			'Enter the message you would like to see when there are no tasks found: ',
 	})
-	updatedSettings.disableExitMessage = await confirmPrompt(
+	const showExitMessage = await confirmPrompt(
 		'Would you to see a message when exiting the GUI?'
 	)
+	updatedSettings.disableExitMessage = !showExitMessage
 
 	if (updatedHeaderTitle) {
 		updatedSettings.headerTitle = updatedHeaderTitle
@@ -81,7 +82,7 @@ const getUpdatedSettingsPrompt = async (storeManager) => {
 		updatedSettings.noTasksMessage = updatedNoTasksMessage
 	}
 
-	if (updatedSettings.disableExitMessage) {
+	if (showExitMessage) {
 		const updatedExitMessage = await input({
 			message: 'Enter exit message',
 		})
