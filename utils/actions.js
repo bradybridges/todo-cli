@@ -1,4 +1,8 @@
-import { printBox, printErrorMessage, printSuccessMessage } from './print.js'
+import {
+	printErrorMessage,
+	printSuccessMessage,
+	printExitMessage,
+} from './print.js'
 import {
 	confirmPrompt,
 	deleteTodosPrompt,
@@ -26,14 +30,8 @@ const handleMenuSelection = async (selection, storeManager) => {
 			await handleSettingsActions(storeManager)
 			break
 		default:
-			printBox(
-				storeManager.settings.exitMessage,
-				{
-					title: 'Exiting',
-					titleAlignment: 'center',
-				},
-				'success'
-			)
+			printExitMessage(storeManager)
+			break
 	}
 }
 
