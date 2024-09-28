@@ -10,6 +10,7 @@ import {
 	updateTodosPrompt,
 	getUpdatedSettingsPrompt,
 	getSettingsSubMenuSelection,
+	getDeleteMenuSelection,
 } from './prompts.js'
 
 const handleMenuSelection = async (selection, storeManager) => {
@@ -21,7 +22,7 @@ const handleMenuSelection = async (selection, storeManager) => {
 			await handleUpdateTodos(storeManager)
 			break
 		case 'delete':
-			await handleDeleteTodos(storeManager)
+			await handleDeleteActions(storeManager)
 			break
 		case 'clear':
 			await handleClearTodos(storeManager)
@@ -57,6 +58,24 @@ const handleUpdateTodos = async (storeManager) => {
 		})
 
 		storeManager.updateTodos(updatedTodos)
+	}
+}
+
+const handleDeleteActions = async (storeManager) => {
+	const deleteAction = await getDeleteMenuSelection()
+
+	switch (deleteAction) {
+		case 'pick-delete':
+			await handleDeleteTodos(storeManager)
+			break
+		case 'delete-complete':
+			console.log('delete completed')
+			break
+		case 'delete-all':
+			handleClearTodos(storeManager)
+			break
+		default:
+			break
 	}
 }
 
