@@ -94,7 +94,7 @@ const getUpdatedSettingsPrompt = async (storeManager) => {
 }
 
 const getSettingsSubMenuSelection = async () => {
-	const selection = await select({
+	return await select({
 		message: 'What would you like to do?',
 		choices: [
 			{
@@ -106,13 +106,13 @@ const getSettingsSubMenuSelection = async () => {
 				value: 'restore-default-settings',
 			},
 			{
-				name: 'Go Back',
-				value: 'back',
+				name: 'Cancel',
+				value: 'cancel',
 			},
 		],
 	})
+}
 
-	return selection
 }
 
 const confirmPrompt = async (message) => {
