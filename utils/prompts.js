@@ -113,6 +113,28 @@ const getSettingsSubMenuSelection = async () => {
 	})
 }
 
+const getDeleteMenuSelection = async () => {
+	return await select({
+		message: 'What would you like to delete?',
+		choices: [
+			{
+				name: 'Choose Delete',
+				value: 'pick-delete',
+			},
+			{
+				name: 'Delete Completed',
+				value: 'delete-completed',
+			},
+			{
+				name: 'Delete All',
+				value: 'delete-all',
+			},
+			{
+				name: 'Cancel',
+				value: 'cancel',
+			}
+		],
+	})
 }
 
 const confirmPrompt = async (message) => {
@@ -126,5 +148,6 @@ export {
 	deleteTodosPrompt,
 	getUpdatedSettingsPrompt,
 	getSettingsSubMenuSelection,
+	getDeleteMenuSelection,
 	confirmPrompt,
 }
