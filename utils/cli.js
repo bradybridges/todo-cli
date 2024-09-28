@@ -186,10 +186,7 @@ const initSettingsCommand = (program, storeManager) => {
 		})
 }
 
-const initCLI = () => {
-	const program = new commander.Command()
-	const storeManager = new StoreManager()
-
+const handleInitCli = (program, storeManager) => {
 	setProgramInformation(program)
 	initAddTaskCommand(program, storeManager)
 	initClearTasksCommand(program, storeManager)
@@ -201,6 +198,13 @@ const initCLI = () => {
 	initSettingsCommand(program, storeManager)
 
 	program.parse()
+}
+
+const initCLI = () => {
+	const program = new commander.Command()
+	const storeManager = new StoreManager()
+
+	handleInitCli(program, storeManager)
 }
 
 export { initCLI }
