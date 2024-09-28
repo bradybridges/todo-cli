@@ -5,20 +5,16 @@ const getMenuSelectionPrompt = async () => {
 		message: 'What would you like to do?',
 		choices: [
 			{
-				name: 'Add New',
+				name: 'Add New Task',
 				value: 'add',
 			},
 			{
-				name: 'Choose Update',
+				name: 'Mark Tasks Complete Or Incomplete',
 				value: 'update',
 			},
 			{
-				name: 'Choose Delete',
+				name: 'Delete Tasks Options',
 				value: 'delete',
-			},
-			{
-				name: 'Clear All',
-				value: 'clear',
 			},
 			{
 				name: 'Settings',
