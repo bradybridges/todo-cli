@@ -99,12 +99,12 @@ const initChooseDeleteTasksCommand = (program, storeManager) => {
 			'-t --tasks <tasks...>',
 			'tasks to delete. expects task IDs separated by space.'
 		)
-		.action(({ tasks }) => {
+		.action(({ taskIds }) => {
 			try {
-				if (!tasks) throw new Error()
+				if (!taskIds) throw new Error()
 
 				const updatedTodos = storeManager.todos.filter(
-					(todo, index) => !tasks.includes(String(index + 1))
+					(todo, index) => !taskIds.includes(String(index + 1))
 				)
 				storeManager.updateTodos(updatedTodos)
 
