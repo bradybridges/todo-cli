@@ -9,7 +9,7 @@ const getMenuSelectionPrompt = async () => {
 				value: 'add',
 			},
 			{
-				name: 'Mark Tasks Complete Or Incomplete',
+				name: 'Mark Tasks Complete/Incomplete',
 				value: 'update',
 			},
 			{
