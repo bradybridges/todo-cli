@@ -113,27 +113,35 @@ const getSettingsSubMenuSelection = async () => {
 	})
 }
 
-const getDeleteMenuSelection = async () => {
+const getDeleteMenuSelection = async (todos) => {
+	const hasCompletedTodos = todos.some((todo) => todo.complete)
+	const todoCount = todos.length
+
+	const choices = [
+		{
+			name: 'Choose Delete',
+			value: 'pick-delete',
+		},
+		{
+			name: `Delete All (${todoCount})`,
+			value: 'delete-all',
+		},
+		{
+			name: 'Cancel',
+			value: 'cancel',
+		},
+	]
+
+	if (hasCompletedTodos) {
+		choices.splice(1, 0, {
+			name: 'Delete Completed',
+			value: 'delete-completed',
+		})
+	}
+
 	return await select({
 		message: 'What would you like to delete?',
-		choices: [
-			{
-				name: 'Choose Delete',
-				value: 'pick-delete',
-			},
-			{
-				name: 'Delete Completed',
-				value: 'delete-completed',
-			},
-			{
-				name: 'Delete All',
-				value: 'delete-all',
-			},
-			{
-				name: 'Cancel',
-				value: 'cancel',
-			}
-		],
+		choices,
 	})
 }
 
