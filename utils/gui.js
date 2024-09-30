@@ -20,10 +20,11 @@ export const displayGUI = async () => {
 
 			await handleMenuSelection(menuSelection, storeManager)
 		} catch (e) {
+			const settings = storeManager.settings
+
 			printBox(
-				e,
 				{
-					title: 'Exiting due to an error',
+					title: settings.exitErrorMessage,
 					titleAlignment: 'center',
 					borderColor: 'red',
 				},
