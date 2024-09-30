@@ -12,7 +12,7 @@ export const displayGUI = async () => {
 			if (storeManager.todos.length) printTitle(storeManager)
 			printTodoList(storeManager)
 
-			const menuSelection = await getMenuSelectionPrompt()
+			const menuSelection = await getMenuSelectionPrompt(storeManager)
 
 			if (!menuSelection) {
 				displayGUI = false
