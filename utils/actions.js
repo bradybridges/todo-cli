@@ -62,7 +62,8 @@ const handleUpdateTodos = async (storeManager) => {
 }
 
 const handleDeleteActions = async (storeManager) => {
-	const deleteAction = await getDeleteMenuSelection()
+	const todos = storeManager.todos
+	const deleteAction = await getDeleteMenuSelection(todos)
 
 	switch (deleteAction) {
 		case 'pick-delete':
