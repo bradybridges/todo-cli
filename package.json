@@ -19,7 +19,7 @@
 		"todo tui",
 		"task tui",
 		"command line interface",
-		"terminal user interface",
+		"terminal user interface"
 	],
 	"author": "Brady Bridges",
 	"license": "ISC",
