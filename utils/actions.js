@@ -81,28 +81,12 @@ const handleDeleteActions = async (storeManager) => {
 }
 
 const handleDeleteTodos = async (storeManager) => {
-	if (storeManager.todos.length === 0) {
-		printErrorMessage(
-			`Successfully deleted ${(Math.random() * 1000).toFixed()} tasks!`
-		)
+	const selectedTodos = await deleteTodosPrompt(storeManager)
+	const updatedTodos = storeManager.todos.filter(
+		(todo) => !selectedTodos.includes(todo.label)
+	)
 
-		await new Promise((resolve) => {
-			setTimeout(() => {
-				printSuccessMessage(
-					'Just kidding, there were no tasks to delete',
-					true
-				)
-				resolve(true)
-			}, 1250)
-		})
-	} else {
-		const selectedTodos = await deleteTodosPrompt(storeManager)
-		const updatedTodos = storeManager.todos.filter(
-			(todo) => !selectedTodos.includes(todo.label)
-		)
-
-		storeManager.updateTodos(updatedTodos)
-	}
+	storeManager.updateTodos(updatedTodos)
 }
 
 const handleDeleteCompleted = (storeManager) => {
