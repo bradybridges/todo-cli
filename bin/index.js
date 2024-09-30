@@ -1,10 +1,10 @@
 #! /usr/bin/env node
 
 import { initCLI } from '../utils/cli.js'
-import { displayGUI } from '../utils/gui.js'
+import { displayTUI } from '../utils/tui.js'
 
 if (process.argv.length > 2) {
 	initCLI()
 } else {
-	displayGUI()
+	displayTUI()
 }

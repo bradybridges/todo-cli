@@ -1,9 +1,9 @@
-import { StoreManager } from '../utils/StoreManager.js'
-import { printBox, printTitle, printTodoList } from '../utils/print.js'
-import { getMenuSelectionPrompt } from '../utils/prompts.js'
-import { handleMenuSelection } from '../utils/actions.js'
+import { StoreManager } from './StoreManager.js'
+import { printBox, printTitle, printTodoList } from './print.js'
+import { getMenuSelectionPrompt } from './prompts.js'
+import { handleMenuSelection } from './actions.js'
 
-export const displayGUI = async () => {
+export const displayTUI = async () => {
 	let displayGUI = true
 	const storeManager = new StoreManager()
 
