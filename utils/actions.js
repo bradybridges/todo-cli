@@ -73,7 +73,7 @@ const handleDeleteActions = async (storeManager) => {
 			handleDeleteCompleted(storeManager)
 			break
 		case 'delete-all':
-			handleClearTodos(storeManager)
+			await handleClearTodos(storeManager)
 			break
 		default:
 			break
