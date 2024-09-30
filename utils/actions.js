@@ -70,7 +70,7 @@ const handleDeleteActions = async (storeManager) => {
 			await handleDeleteTodos(storeManager)
 			break
 		case 'delete-completed':
-			handleDeleteCompleted(storeManager)
+			await handleDeleteCompleted(storeManager)
 			break
 		case 'delete-all':
 			await handleClearTodos(storeManager)
@@ -89,10 +89,14 @@ const handleDeleteTodos = async (storeManager) => {
 	storeManager.updateTodos(updatedTodos)
 }
 
-const handleDeleteCompleted = (storeManager) => {
+const handleDeleteCompleted = async (storeManager) => {
 	const todos = storeManager.todos
 	const incompleteTasks = todos.filter((todo) => !todo.complete)
-	storeManager.updateTodos(incompleteTasks)
+	const confirmedDeleteCompleted = await confirmPrompt('Are you sure you want to delete all completed tasks?')
+
+	if (confirmedDeleteCompleted) {
+		storeManager.updateTodos(incompleteTasks)
+	}
 }
 
 const handleClearTodos = async (storeManager) => {
