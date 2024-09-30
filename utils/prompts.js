@@ -1,30 +1,38 @@
 import { input, select, checkbox, confirm } from '@inquirer/prompts'
 
-const getMenuSelectionPrompt = async () => {
+const getMenuSelectionPrompt = async (storeManager) => {
+	const hasTodos = storeManager.todos.length ? true : false
+	const choices = [
+		{
+			name: 'Add New',
+			value: 'add',
+		},
+		{
+			name: 'Settings',
+			value: 'settings',
+		},
+		{
+			name: 'Exit',
+			value: '',
+		},
+	]
+
+	if (hasTodos) {
+		const updateChoice = {
+			name: 'Mark Complete/Incomplete',
+			value: 'update',
+		}
+		const deleteChoice = {
+			name: 'Delete Options',
+			value: 'delete',
+		}
+
+		choices.splice(1, 0, updateChoice, deleteChoice)
+	}
+
 	const selection = await select({
 		message: 'What would you like to do?',
-		choices: [
-			{
-				name: 'Add New Task',
-				value: 'add',
-			},
-			{
-				name: 'Mark Tasks Complete/Incomplete',
-				value: 'update',
-			},
-			{
-				name: 'Delete Tasks Options',
-				value: 'delete',
-			},
-			{
-				name: 'Settings',
-				value: 'settings',
-			},
-			{
-				name: 'Exit',
-				value: '',
-			},
-		],
+		choices,
 	})
 
 	return selection
