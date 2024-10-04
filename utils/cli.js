@@ -45,12 +45,14 @@ const initAddTaskCommand = (program, storeManager) => {
 }
 
 const initDeleteAllTasksCommand = (program, storeManager) => {
+	const tasksLength = storeManager.todos.length
+
 	program
-		.command('clear')
-		.description('clear all tasks')
+		.command('delete-all')
+		.description('delete all tasks')
 		.action(async () => {
 			const confirmed = await confirmPrompt(
-				'Are you sure you want to clear all tasks?'
+				`Are you sure you want to delete all tasks? (${tasksLength})`
 			)
 
 			if (confirmed) {
