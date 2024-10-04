@@ -12,9 +12,14 @@
 	},
 	"keywords": [
 		"todo list",
+		"task list",
+		"task manager",
+		"todo manager",
 		"cli",
-		"todo gui",
-		"command line interface"
+		"todo tui",
+		"task tui",
+		"command line interface",
+		"terminal user interface"
 	],
 	"author": "Brady Bridges",
 	"license": "ISC",

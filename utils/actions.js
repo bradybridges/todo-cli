@@ -62,17 +62,18 @@ const handleUpdateTodos = async (storeManager) => {
 }
 
 const handleDeleteActions = async (storeManager) => {
-	const deleteAction = await getDeleteMenuSelection()
+	const todos = storeManager.todos
+	const deleteAction = await getDeleteMenuSelection(todos)
 
 	switch (deleteAction) {
 		case 'pick-delete':
 			await handleDeleteTodos(storeManager)
 			break
-		case 'delete-complete':
-			console.log('delete completed')
+		case 'delete-completed':
+			await handleDeleteCompleted(storeManager)
 			break
 		case 'delete-all':
-			handleClearTodos(storeManager)
+			await handleClearTodos(storeManager)
 			break
 		default:
 			break
@@ -80,33 +81,27 @@ const handleDeleteActions = async (storeManager) => {
 }
 
 const handleDeleteTodos = async (storeManager) => {
-	if (storeManager.todos.length === 0) {
-		printErrorMessage(
-			`Successfully deleted ${(Math.random() * 1000).toFixed()} tasks!`
-		)
+	const selectedTodos = await deleteTodosPrompt(storeManager)
+	const updatedTodos = storeManager.todos.filter(
+		(todo) => !selectedTodos.includes(todo.label)
+	)
 
-		await new Promise((resolve) => {
-			setTimeout(() => {
-				printSuccessMessage(
-					'Just kidding, there were no tasks to delete',
-					true
-				)
-				resolve(true)
-			}, 1250)
-		})
-	} else {
-		const selectedTodos = await deleteTodosPrompt(storeManager)
-		const updatedTodos = storeManager.todos.filter(
-			(todo) => !selectedTodos.includes(todo.label)
-		)
+	storeManager.updateTodos(updatedTodos)
+}
 
-		storeManager.updateTodos(updatedTodos)
+const handleDeleteCompleted = async (storeManager) => {
+	const todos = storeManager.todos
+	const incompleteTasks = todos.filter((todo) => !todo.complete)
+	const confirmedDeleteCompleted = await confirmPrompt('Are you sure you want to delete all completed tasks?')
+
+	if (confirmedDeleteCompleted) {
+		storeManager.updateTodos(incompleteTasks)
 	}
 }
 
 const handleClearTodos = async (storeManager) => {
 	const confirmed = await confirmPrompt(
-		'Are you sure you want to delete all todo items?'
+		'Are you sure you want to delete all tasks?'
 	)
 
 	if (confirmed) {
@@ -126,7 +121,7 @@ const handleAddTodo = async (storeManager) => {
 
 const handleUpdateSettings = async (storeManager) => {
 	const updatedSettings = await getUpdatedSettingsPrompt(storeManager)
-	const confirmUpdateSettings = await confirmPrompt('Update settings?')
+	const confirmUpdateSettings = await confirmPrompt('Are you sure you want to update settings?')
 
 	if (confirmUpdateSettings) {
 		storeManager.updateSettings(updatedSettings)

@@ -2,10 +2,10 @@ import Conf from 'conf'
 
 const defaultStoreSettings = {
 	disableExitMessage: false,
-	exitErrorMessage: 'Goodbye',
+	exitErrorMessage: 'Exiting due to an error',
 	exitMessage: 'Godspeed, friend',
 	headerTitle: 'TODO LIST',
-	noTasksMessage: 'No TODOs found. Take the day off.',
+	noTasksMessage: 'No TODOs found',
 }
 
 const storeConfig = {
