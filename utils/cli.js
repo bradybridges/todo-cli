@@ -32,8 +32,8 @@ const setProgramInformation = (program) => {
 const initAddTaskCommand = (program, storeManager) => {
 	program
 		.command('add')
-		.description('Add a new task')
-		.argument('<string>', 'New task')
+		.description('add a new task')
+		.argument('<string>', 'new task')
 		.action((newTodo) => {
 			if (newTodo && typeof newTodo === 'string') {
 				storeManager.addTodo(newTodo)
@@ -47,7 +47,7 @@ const initAddTaskCommand = (program, storeManager) => {
 const initClearTasksCommand = (program, storeManager) => {
 	program
 		.command('clear')
-		.description('Clear all tasks')
+		.description('clear all tasks')
 		.action(async () => {
 			const confirmed = await confirmPrompt(
 				'Are you sure you want to clear all tasks?'
@@ -65,7 +65,7 @@ const initClearTasksCommand = (program, storeManager) => {
 const initListTasksCommand = (program, storeManager) => {
 	program
 		.command('list')
-		.description('List tasks')
+		.description('list tasks')
 		.action(() => {
 			if (storeManager.todos.length !== 0) printTitle(storeManager)
 			printTodoList(storeManager)
@@ -74,10 +74,12 @@ const initListTasksCommand = (program, storeManager) => {
 
 const initClearCompletedTasksCommand = (program, storeManager) => {
 	program
-		.command('clear-completed')
-		.description('Clear all completed tasks')
+		.command('delete-completed')
+		.description('delete completed tasks')
 		.action(async () => {
-			const confirmClearCompleted = await confirmPrompt('Are you sure you want to clear all completed tasks?')
+			const confirmClearCompleted = await confirmPrompt(
+				'Are you sure you want to clear all completed tasks?'
+			)
 
 			if (confirmClearCompleted) {
 				const incompleteTodos = storeManager.todos.filter(
@@ -92,17 +94,17 @@ const initClearCompletedTasksCommand = (program, storeManager) => {
 const initChooseDeleteTasksCommand = (program, storeManager) => {
 	program
 		.command('delete')
-		.description('Choose tasks to delete')
+		.description('choose tasks to delete')
 		.option(
 			'-t --tasks <tasks...>',
-			'Tasks to delete. Expects task IDs separated by space.'
+			'tasks to delete. expects task IDs separated by space.'
 		)
-		.action(({ tasks }) => {
+		.action(({ taskIds }) => {
 			try {
-				if (!tasks) throw new Error()
+				if (!taskIds) throw new Error()
 
 				const updatedTodos = storeManager.todos.filter(
-					(todo, index) => !tasks.includes(String(index + 1))
+					(todo, index) => !taskIds.includes(String(index + 1))
 				)
 				storeManager.updateTodos(updatedTodos)
 
@@ -118,7 +120,7 @@ const initChooseDeleteTasksCommand = (program, storeManager) => {
 const initMarkCompleteCommand = (program, storeManager) => {
 	program
 		.command('mark-complete')
-		.description('Choose tasks to mark as complete')
+		.description('choose tasks to mark as complete')
 		.option(
 			'-t --tasks <tasks...>',
 			'Tasks to mark as complete. Expects task IDs separated by space.'
@@ -148,7 +150,7 @@ const initMarkCompleteCommand = (program, storeManager) => {
 const initMarkIncompleteCommand = (program, storeManager) => {
 	program
 		.command('mark-incomplete')
-		.description('Choose tasks to mark as incomplete')
+		.description('choose tasks to mark as incomplete')
 		.option(
 			'-t --tasks <tasks...>',
 			'Tasks to mark as incomplete. Expects task IDs separated by space.'
@@ -178,16 +180,13 @@ const initMarkIncompleteCommand = (program, storeManager) => {
 const initSettingsCommand = (program, storeManager) => {
 	program
 		.command('settings')
-		.description('Update or reset gui settings')
+		.description('update or reset gui settings')
 		.action(async () => {
 			await handleSettingsActions(storeManager)
 		})
 }
 
-const initCLI = () => {
-	const program = new commander.Command()
-	const storeManager = new StoreManager()
-
+const handleInitCli = (program, storeManager) => {
 	setProgramInformation(program)
 	initAddTaskCommand(program, storeManager)
 	initClearTasksCommand(program, storeManager)
@@ -199,6 +198,13 @@ const initCLI = () => {
 	initSettingsCommand(program, storeManager)
 
 	program.parse()
+}
+
+const initCLI = () => {
+	const program = new commander.Command()
+	const storeManager = new StoreManager()
+
+	handleInitCli(program, storeManager)
 }
 
 export { initCLI }

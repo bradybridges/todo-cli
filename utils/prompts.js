@@ -5,20 +5,16 @@ const getMenuSelectionPrompt = async () => {
 		message: 'What would you like to do?',
 		choices: [
 			{
-				name: 'Add New',
+				name: 'Add New Task',
 				value: 'add',
 			},
 			{
-				name: 'Choose Update',
+				name: 'Mark Tasks Complete/Incomplete',
 				value: 'update',
 			},
 			{
-				name: 'Choose Delete',
+				name: 'Delete Tasks Options',
 				value: 'delete',
-			},
-			{
-				name: 'Clear All',
-				value: 'clear',
 			},
 			{
 				name: 'Settings',
@@ -73,9 +69,10 @@ const getUpdatedSettingsPrompt = async (storeManager) => {
 		message:
 			'Enter the message you would like to see when there are no tasks found: ',
 	})
-	updatedSettings.disableExitMessage = await confirmPrompt(
+	const showExitMessage = await confirmPrompt(
 		'Would you to see a message when exiting the GUI?'
 	)
+	updatedSettings.disableExitMessage = !showExitMessage
 
 	if (updatedHeaderTitle) {
 		updatedSettings.headerTitle = updatedHeaderTitle
@@ -85,7 +82,7 @@ const getUpdatedSettingsPrompt = async (storeManager) => {
 		updatedSettings.noTasksMessage = updatedNoTasksMessage
 	}
 
-	if (updatedSettings.disableExitMessage) {
+	if (showExitMessage) {
 		const updatedExitMessage = await input({
 			message: 'Enter exit message',
 		})
@@ -97,7 +94,7 @@ const getUpdatedSettingsPrompt = async (storeManager) => {
 }
 
 const getSettingsSubMenuSelection = async () => {
-	const selection = await select({
+	return await select({
 		message: 'What would you like to do?',
 		choices: [
 			{
@@ -109,13 +106,35 @@ const getSettingsSubMenuSelection = async () => {
 				value: 'restore-default-settings',
 			},
 			{
-				name: 'Go Back',
-				value: 'back',
+				name: 'Cancel',
+				value: 'cancel',
 			},
 		],
 	})
+}
 
-	return selection
+const getDeleteMenuSelection = async () => {
+	return await select({
+		message: 'What would you like to delete?',
+		choices: [
+			{
+				name: 'Choose Delete',
+				value: 'pick-delete',
+			},
+			{
+				name: 'Delete Completed',
+				value: 'delete-completed',
+			},
+			{
+				name: 'Delete All',
+				value: 'delete-all',
+			},
+			{
+				name: 'Cancel',
+				value: 'cancel',
+			}
+		],
+	})
 }
 
 const confirmPrompt = async (message) => {
@@ -129,5 +148,6 @@ export {
 	deleteTodosPrompt,
 	getUpdatedSettingsPrompt,
 	getSettingsSubMenuSelection,
+	getDeleteMenuSelection,
 	confirmPrompt,
 }

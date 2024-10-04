@@ -120,10 +120,27 @@ const printErrorMessage = (msg, disableSpacing = false) => {
 	console.log('\n')
 }
 
+const printExitMessage = (storeManager) => {
+	const settings = storeManager.settings
+	const { disableExitMessage, exitMessage } = settings
+
+	if (!disableExitMessage) {
+		printBox(
+			exitMessage,
+			{
+				title: 'Exiting',
+				titleAlignment: 'center',
+			},
+			'success'
+		)
+	}
+}
+
 export {
 	printTitle,
 	printBox,
 	printTodoList,
 	printSuccessMessage,
 	printErrorMessage,
+	printExitMessage,
 }
