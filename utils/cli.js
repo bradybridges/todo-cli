@@ -44,7 +44,7 @@ const initAddTaskCommand = (program, storeManager) => {
 		})
 }
 
-const initClearTasksCommand = (program, storeManager) => {
+const initDeleteAllTasksCommand = (program, storeManager) => {
 	program
 		.command('clear')
 		.description('clear all tasks')
@@ -72,7 +72,7 @@ const initListTasksCommand = (program, storeManager) => {
 		})
 }
 
-const initClearCompletedTasksCommand = (program, storeManager) => {
+const initDeleteCompletedTasksCommand = (program, storeManager) => {
 	program
 		.command('delete-completed')
 		.description('delete completed tasks')
@@ -189,9 +189,9 @@ const initSettingsCommand = (program, storeManager) => {
 const handleInitCli = (program, storeManager) => {
 	setProgramInformation(program)
 	initAddTaskCommand(program, storeManager)
-	initClearTasksCommand(program, storeManager)
 	initListTasksCommand(program, storeManager)
-	initClearCompletedTasksCommand(program, storeManager)
+	initDeleteAllTasksCommand(program, storeManager)
+	initDeleteCompletedTasksCommand(program, storeManager)
 	initChooseDeleteTasksCommand(program, storeManager)
 	initMarkCompleteCommand(program, storeManager)
 	initMarkIncompleteCommand(program, storeManager)
