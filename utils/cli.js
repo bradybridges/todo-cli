@@ -75,20 +75,28 @@ const initListTasksCommand = (program, storeManager) => {
 }
 
 const initDeleteCompletedTasksCommand = (program, storeManager) => {
+	const completedTasksLength = storeManager.todos.filter(
+		(task) => task.complete
+	).length
+
 	program
 		.command('delete-completed')
 		.description('delete completed tasks')
 		.action(async () => {
-			const confirmClearCompleted = await confirmPrompt(
-				'Are you sure you want to clear all completed tasks?'
-			)
-
-			if (confirmClearCompleted) {
-				const incompleteTodos = storeManager.todos.filter(
-					(todo) => !todo.complete
+			if (completedTasksLength > 0) {
+				const confirmClearCompleted = await confirmPrompt(
+					`Are you sure you want to delete all completed tasks? (${completedTasksLength})`
 				)
-				storeManager.updateTodos(incompleteTodos)
-				printSuccessMessage('Completed tasks cleared successfully')
+
+				if (confirmClearCompleted) {
+					const incompleteTodos = storeManager.todos.filter(
+						(todo) => !todo.complete
+					)
+					storeManager.updateTodos(incompleteTodos)
+					printSuccessMessage('Completed tasks cleared successfully')
+				}
+			} else {
+				printErrorMessage('There are no completed tasks to delete')
 			}
 		})
 }
