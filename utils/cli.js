@@ -199,10 +199,10 @@ const initSettingsCommand = (program, storeManager) => {
 const handleInitCli = (program, storeManager) => {
 	setProgramInformation(program)
 	initAddTaskCommand(program, storeManager)
-	initListTasksCommand(program, storeManager)
 	initDeleteAllTasksCommand(program, storeManager)
 	initDeleteCompletedTasksCommand(program, storeManager)
 	initChooseDeleteTasksCommand(program, storeManager)
+	initListTasksCommand(program, storeManager)
 	initMarkCompleteCommand(program, storeManager)
 	initMarkIncompleteCommand(program, storeManager)
 	initSettingsCommand(program, storeManager)
