@@ -111,7 +111,7 @@ const initChooseDeleteTasksCommand = (program, storeManager) => {
 		)
 		.action(({ tasks }) => {
 			try {
-				if (!taskIds) throw new Error()
+				if (!tasks) throw new Error()
 
 				const updatedTodos = storeManager.todos.filter(
 					(todo, index) => !tasks.includes(String(index + 1))
