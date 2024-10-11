@@ -1,6 +1,6 @@
 {
 	"name": "@bradyjbridges/todo-cli",
-	"version": "0.9.0",
+	"version": "0.9.1",
 	"main": "index.js",
 	"bin": {
 		"todo": "bin/index.js"
@@ -19,7 +19,8 @@
 		"todo tui",
 		"task tui",
 		"command line interface",
-		"terminal user interface"
+		"terminal user interface",
+		"todo-cli"
 	],
 	"author": "Brady Bridges",
 	"license": "ISC",
