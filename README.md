@@ -5,7 +5,7 @@ A command line tool to manage a simple todo list.
 ### Installation
 ***This package should be installed globally.***
 ```
-npm install -g @bradybridges/todo-cli
+npm install -g @bradyjbridges/todo-cli
 ```
 
 ## Usage
