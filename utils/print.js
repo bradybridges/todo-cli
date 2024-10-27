@@ -82,6 +82,7 @@ const printTodoList = (storeManager) => {
 			const boxenConfig = {
 				borderColor: todo.complete ? baseGreen : baseRed,
 				borderStyle: 'round',
+				padding: { left: 1, right: 1 },
 				textAlignment: 'left',
 				title: todo.complete ? 'Complete' : 'Incomplete',
 				titleAlignment: 'right',
