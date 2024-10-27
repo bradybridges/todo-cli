@@ -111,11 +111,18 @@ const handleClearTodos = async (storeManager) => {
 	}
 }
 
+const handleTruncateText = (text, limit = 130, appendText = '...') => {
+	return text.length > limit
+		? text.substring(0, limit - appendText.length) + appendText
+		: text
+}
+
 const handleAddTodo = async (storeManager) => {
 	const newTodo = await getNewTodoPrompt()
 
 	if (newTodo) {
-		storeManager.addTodo(newTodo)
+		const truncatedTodo = handleTruncateText(newTodo)
+		storeManager.addTodo(truncatedTodo)
 	}
 }
 
