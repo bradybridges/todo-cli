@@ -122,7 +122,7 @@ const getSettingsSubMenuSelection = async () => {
 }
 
 const getDeleteMenuSelection = async (todos) => {
-	const hasCompletedTodos = todos.some((todo) => todo.complete)
+	const completedTodosCount = todos.filter((todo) => todo.complete).length;
 	const todoCount = todos.length
 
 	const choices = [
@@ -140,9 +140,9 @@ const getDeleteMenuSelection = async (todos) => {
 		},
 	]
 
-	if (hasCompletedTodos) {
+	if (completedTodosCount > 0) {
 		choices.splice(1, 0, {
-			name: 'Delete Completed',
+			name: `Delete Completed (${completedTodosCount})`,
 			value: 'delete-completed',
 		})
 	}
