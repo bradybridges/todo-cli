@@ -92,7 +92,9 @@ const handleDeleteTodos = async (storeManager) => {
 const handleDeleteCompleted = async (storeManager) => {
 	const todos = storeManager.todos
 	const incompleteTasks = todos.filter((todo) => !todo.complete)
-	const confirmedDeleteCompleted = await confirmPrompt('Are you sure you want to delete all completed tasks?')
+	const confirmedDeleteCompleted = await confirmPrompt(
+		'Are you sure you want to delete all completed tasks?'
+	)
 
 	if (confirmedDeleteCompleted) {
 		storeManager.updateTodos(incompleteTasks)
@@ -128,7 +130,9 @@ const handleAddTodo = async (storeManager) => {
 
 const handleUpdateSettings = async (storeManager) => {
 	const updatedSettings = await getUpdatedSettingsPrompt(storeManager)
-	const confirmUpdateSettings = await confirmPrompt('Are you sure you want to update settings?')
+	const confirmUpdateSettings = await confirmPrompt(
+		'Are you sure you want to update settings?'
+	)
 
 	if (confirmUpdateSettings) {
 		storeManager.updateSettings(updatedSettings)
