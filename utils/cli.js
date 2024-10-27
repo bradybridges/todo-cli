@@ -15,7 +15,7 @@ import { StoreManager } from './StoreManager.js'
 const programInformation = {
 	name: 'todo-cli',
 	description: 'A command line tool to manage a simple todo list.',
-	version: '0.9.1',
+	version: '0.9.2',
 }
 
 const setProgramInformation = (program) => {

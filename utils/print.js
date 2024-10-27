@@ -11,7 +11,7 @@ const greenItalicText = chalk.hex(baseGreen).italic
 const redBoldText = chalk.hex(baseRed).bold
 const yellowBoldText = chalk.hex(baseYellow).bold
 
-const boxWidth = 60
+const boxWidth = 75
 const boxenOptions = {
 	borderColor: baseGreen,
 	borderStyle: 'double',
@@ -49,7 +49,7 @@ const printBox = (text, options = {}, type = 'default') => {
 		margin: 0,
 		padding: 1,
 		textAlignment: 'center',
-		width: 60,
+		width: boxWidth,
 		...options,
 	}
 	const textTypes = {
@@ -82,10 +82,11 @@ const printTodoList = (storeManager) => {
 			const boxenConfig = {
 				borderColor: todo.complete ? baseGreen : baseRed,
 				borderStyle: 'round',
+				padding: { left: 1, right: 1 },
 				textAlignment: 'left',
 				title: todo.complete ? 'Complete' : 'Incomplete',
 				titleAlignment: 'right',
-				width: 60,
+				width: boxWidth,
 			}
 
 			console.log(boxen(styledText, boxenConfig))

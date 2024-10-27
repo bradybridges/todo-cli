@@ -92,7 +92,9 @@ const handleDeleteTodos = async (storeManager) => {
 const handleDeleteCompleted = async (storeManager) => {
 	const todos = storeManager.todos
 	const incompleteTasks = todos.filter((todo) => !todo.complete)
-	const confirmedDeleteCompleted = await confirmPrompt('Are you sure you want to delete all completed tasks?')
+	const confirmedDeleteCompleted = await confirmPrompt(
+		'Are you sure you want to delete all completed tasks?'
+	)
 
 	if (confirmedDeleteCompleted) {
 		storeManager.updateTodos(incompleteTasks)
@@ -111,17 +113,26 @@ const handleClearTodos = async (storeManager) => {
 	}
 }
 
+const handleTruncateText = (text, limit = 130, appendText = '...') => {
+	return text.length > limit
+		? text.substring(0, limit - appendText.length) + appendText
+		: text
+}
+
 const handleAddTodo = async (storeManager) => {
 	const newTodo = await getNewTodoPrompt()
 
 	if (newTodo) {
-		storeManager.addTodo(newTodo)
+		const truncatedTodo = handleTruncateText(newTodo)
+		storeManager.addTodo(truncatedTodo)
 	}
 }
 
 const handleUpdateSettings = async (storeManager) => {
 	const updatedSettings = await getUpdatedSettingsPrompt(storeManager)
-	const confirmUpdateSettings = await confirmPrompt('Are you sure you want to update settings?')
+	const confirmUpdateSettings = await confirmPrompt(
+		'Are you sure you want to update settings?'
+	)
 
 	if (confirmUpdateSettings) {
 		storeManager.updateSettings(updatedSettings)
