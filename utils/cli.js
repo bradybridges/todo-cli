@@ -109,16 +109,22 @@ const initChooseDeleteTasksCommand = (program, storeManager) => {
 			'-t --tasks <tasks...>',
 			'tasks to delete. expects task IDs separated by space.'
 		)
-		.action(({ tasks }) => {
+		.action(async ({ tasks }) => {
 			try {
 				if (!tasks) throw new Error()
 
-				const updatedTodos = storeManager.todos.filter(
-					(todo, index) => !tasks.includes(String(index + 1))
+				const confirmDeleteSelected = await confirmPrompt(
+					`Are you sure you want to delete selected tasks?`
 				)
-				storeManager.updateTodos(updatedTodos)
 
-				printSuccessMessage('Tasks deleted successfully')
+				if (confirmDeleteSelected) {
+					const updatedTodos = storeManager.todos.filter(
+						(todo, index) => !tasks.includes(String(index + 1))
+					)
+					storeManager.updateTodos(updatedTodos)
+
+					printSuccessMessage('Tasks deleted successfully')
+				}
 			} catch {
 				printErrorMessage(
 					'Failed to delete tasks. Invalid format. $ todo delete -t 1 2 3'

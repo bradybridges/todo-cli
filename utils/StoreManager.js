@@ -1,6 +1,5 @@
 import { printErrorMessage } from './print.js'
-import { getStore } from './store.js'
-import { defaultStoreSettings } from './store.js'
+import { getStore, defaultStoreSettings } from './store.js'
 
 export class StoreManager {
 	constructor() {
