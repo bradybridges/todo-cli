@@ -82,11 +82,12 @@ const handleDeleteActions = async (storeManager) => {
 
 const handleDeleteTodos = async (storeManager) => {
 	const selectedTodos = await deleteTodosPrompt(storeManager)
-	const updatedTodos = storeManager.todos.filter(
-		(todo) => !selectedTodos.includes(todo.label)
-	)
 
-	storeManager.updateTodos(updatedTodos)
+	if (selectedTodos.length > 0) {
+		const updatedTodos = storeManager.todos.filter(
+			(todo) => !selectedTodos.includes(todo.label)
+		)
+	}
 }
 
 const handleDeleteCompleted = async (storeManager) => {
