@@ -84,9 +84,17 @@ const handleDeleteTodos = async (storeManager) => {
 	const selectedTodos = await deleteTodosPrompt(storeManager)
 
 	if (selectedTodos.length > 0) {
+		const confirmedDeleteSelected = await confirmPrompt(
+			'Are you sure you want to delete selected tasks?'
+		)
+
 		const updatedTodos = storeManager.todos.filter(
 			(todo) => !selectedTodos.includes(todo.label)
 		)
+
+		if (confirmedDeleteSelected) {
+			storeManager.updateTodos(updatedTodos)
+		}
 	}
 }
 
