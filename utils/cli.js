@@ -1,5 +1,6 @@
 /* external imports */
 import * as commander from 'commander'
+import { createRequire } from 'module'
 
 /* internal imports */
 import { confirmPrompt } from './prompts.js'
@@ -12,12 +13,16 @@ import {
 import { handleSettingsActions } from './actions.js'
 import { StoreManager } from './StoreManager.js'
 
+const require = createRequire(import.meta.url)
+const { version } = require('../package.json')
+
 const programInformation = {
 	name: 'todo-cli',
 	description: 'A command line tool to manage a simple todo list.',
-	version: '0.9.2',
+	version,
 }
 
+/** @param {commander.Command} program */
 const setProgramInformation = (program) => {
 	program
 		.name(programInformation.name)
@@ -29,12 +34,16 @@ const setProgramInformation = (program) => {
 		)
 }
 
+/**
+ * @param {commander.Command} program
+ * @param {import('./StoreManager.js').StoreManager} storeManager
+ */
 const initAddTaskCommand = (program, storeManager) => {
 	program
 		.command('add')
 		.description('add a new task')
 		.argument('<string>', 'new task')
-		.action((newTodo) => {
+		.action((/** @type {string} */ newTodo) => {
 			if (newTodo && typeof newTodo === 'string') {
 				storeManager.addTodo(newTodo)
 				printSuccessMessage(`"${newTodo}" added successfully`)
@@ -44,6 +53,10 @@ const initAddTaskCommand = (program, storeManager) => {
 		})
 }
 
+/**
+ * @param {commander.Command} program
+ * @param {import('./StoreManager.js').StoreManager} storeManager
+ */
 const initDeleteAllTasksCommand = (program, storeManager) => {
 	const tasksLength = storeManager.todos.length
 
@@ -64,6 +77,10 @@ const initDeleteAllTasksCommand = (program, storeManager) => {
 		})
 }
 
+/**
+ * @param {commander.Command} program
+ * @param {import('./StoreManager.js').StoreManager} storeManager
+ */
 const initListTasksCommand = (program, storeManager) => {
 	program
 		.command('list')
@@ -74,6 +91,10 @@ const initListTasksCommand = (program, storeManager) => {
 		})
 }
 
+/**
+ * @param {commander.Command} program
+ * @param {import('./StoreManager.js').StoreManager} storeManager
+ */
 const initDeleteCompletedTasksCommand = (program, storeManager) => {
 	const completedTasksLength = storeManager.todos.filter(
 		(task) => task.complete
@@ -101,15 +122,19 @@ const initDeleteCompletedTasksCommand = (program, storeManager) => {
 		})
 }
 
+/**
+ * @param {commander.Command} program
+ * @param {import('./StoreManager.js').StoreManager} storeManager
+ */
 const initChooseDeleteTasksCommand = (program, storeManager) => {
 	program
 		.command('delete')
 		.description('choose tasks to delete')
 		.option(
-			'-t --tasks <tasks...>',
+			'-t, --tasks <tasks...>',
 			'tasks to delete. expects task IDs separated by space.'
 		)
-		.action(({ tasks }) => {
+		.action((/** @type {{ tasks?: string[] }} */ { tasks }) => {
 			try {
 				if (!tasks) throw new Error()
 
@@ -127,15 +152,19 @@ const initChooseDeleteTasksCommand = (program, storeManager) => {
 		})
 }
 
+/**
+ * @param {commander.Command} program
+ * @param {import('./StoreManager.js').StoreManager} storeManager
+ */
 const initMarkCompleteCommand = (program, storeManager) => {
 	program
 		.command('mark-complete')
 		.description('choose tasks to mark as complete')
 		.option(
-			'-t --tasks <tasks...>',
+			'-t, --tasks <tasks...>',
 			'Tasks to mark as complete. Expects task IDs separated by space.'
 		)
-		.action(({ tasks }) => {
+		.action((/** @type {{ tasks?: string[] }} */ { tasks }) => {
 			try {
 				if (!tasks) throw new Error()
 
@@ -157,15 +186,19 @@ const initMarkCompleteCommand = (program, storeManager) => {
 		})
 }
 
+/**
+ * @param {commander.Command} program
+ * @param {import('./StoreManager.js').StoreManager} storeManager
+ */
 const initMarkIncompleteCommand = (program, storeManager) => {
 	program
 		.command('mark-incomplete')
 		.description('choose tasks to mark as incomplete')
 		.option(
-			'-t --tasks <tasks...>',
+			'-t, --tasks <tasks...>',
 			'Tasks to mark as incomplete. Expects task IDs separated by space.'
 		)
-		.action(({ tasks }) => {
+		.action((/** @type {{ tasks?: string[] }} */ { tasks }) => {
 			try {
 				if (!tasks) throw new Error()
 
@@ -187,6 +220,10 @@ const initMarkIncompleteCommand = (program, storeManager) => {
 		})
 }
 
+/**
+ * @param {commander.Command} program
+ * @param {import('./StoreManager.js').StoreManager} storeManager
+ */
 const initSettingsCommand = (program, storeManager) => {
 	program
 		.command('settings')
@@ -196,6 +233,10 @@ const initSettingsCommand = (program, storeManager) => {
 		})
 }
 
+/**
+ * @param {commander.Command} program
+ * @param {import('./StoreManager.js').StoreManager} storeManager
+ */
 const handleInitCli = (program, storeManager) => {
 	setProgramInformation(program)
 	initAddTaskCommand(program, storeManager)
