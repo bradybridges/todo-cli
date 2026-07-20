@@ -1,9 +1,10 @@
 import { expect, assert } from 'chai'
 import { StoreManager } from '../utils/StoreManager.js'
 import { defaultStoreSettings } from '../utils/store.js'
+import { createTempStoreOptions } from './testUtils.js'
 
 describe('Store Manager', () => {
-	const storeManager = new StoreManager()
+	const storeManager = new StoreManager(createTempStoreOptions())
 
 	it('it should initialize with an empty todo list', () => {
 		const todos = storeManager.todos
