@@ -1,5 +1,10 @@
 import { StoreManager } from './StoreManager.js'
-import { printBox, printTitle, printTodoList } from './print.js'
+import {
+	printBox,
+	printExitMessage,
+	printTitle,
+	printTodoList,
+} from './print.js'
 import { getMenuSelectionPrompt } from './prompts.js'
 import { handleMenuSelection } from './actions.js'
 
@@ -20,17 +25,23 @@ export const displayTUI = async () => {
 
 			await handleMenuSelection(menuSelection, storeManager)
 		} catch (e) {
-			const settings = storeManager.settings
-
-			printBox(
-				{
-					title: settings.exitErrorMessage,
-					titleAlignment: 'center',
-					borderColor: 'red',
-				},
-				'error'
-			)
 			displayGUI = false
+
+			if (e instanceof Error && e.name === 'ExitPromptError') {
+				printExitMessage(storeManager)
+			} else {
+				const settings = storeManager.settings
+
+				printBox(
+					settings.exitErrorMessage,
+					{
+						title: 'Error',
+						titleAlignment: 'center',
+						borderColor: 'red',
+					},
+					'error'
+				)
+			}
 		}
 	}
 }

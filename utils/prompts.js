@@ -1,5 +1,6 @@
 import { input, select, checkbox, confirm } from '@inquirer/prompts'
 
+/** @param {import('./types.js').StoreSchema} storeManager */
 const getMenuSelectionPrompt = async (storeManager) => {
 	const hasTodos = storeManager.todos.length ? true : false
 	const choices = [
@@ -42,32 +43,35 @@ const getNewTodoPrompt = async () => {
 	return await input({ message: 'Enter new todo: ' })
 }
 
+/** @param {import('./types.js').StoreSchema} storeManager */
 const updateTodosPrompt = async (storeManager) => {
 	return await checkbox({
 		message: 'Update status of tasks: ',
-		choices: storeManager.todos.map((todo) => {
+		choices: storeManager.todos.map((todo, index) => {
 			return {
 				name: todo.label,
-				value: todo.label,
+				value: index,
 				checked: todo.complete,
 			}
 		}),
 	})
 }
 
+/** @param {import('./types.js').StoreSchema} storeManager */
 const deleteTodosPrompt = async (storeManager) => {
 	return await checkbox({
 		message: 'Select tasks to delete: ',
-		choices: storeManager.todos.map((todo) => {
+		choices: storeManager.todos.map((todo, index) => {
 			return {
 				name: `${todo.label} - ${todo.complete ? 'complete' : 'incomplete'}`,
-				value: todo.label,
+				value: index,
 				checked: false,
 			}
 		}),
 	})
 }
 
+/** @param {import('./types.js').StoreSchema} storeManager */
 const getUpdatedSettingsPrompt = async (storeManager) => {
 	const updatedSettings = storeManager.settings
 	const updatedHeaderTitle = await input({
@@ -121,6 +125,7 @@ const getSettingsSubMenuSelection = async () => {
 	})
 }
 
+/** @param {import('./types.js').Todo[]} todos */
 const getDeleteMenuSelection = async (todos) => {
 	const completedTodosCount = todos.filter((todo) => todo.complete).length;
 	const todoCount = todos.length
@@ -153,6 +158,7 @@ const getDeleteMenuSelection = async (todos) => {
 	})
 }
 
+/** @param {string} message */
 const confirmPrompt = async (message) => {
 	return await confirm({ message })
 }

@@ -1,17 +1,18 @@
 import { expect, assert } from 'chai'
 import { getStore } from '../utils/store.js'
 import { defaultStoreSettings } from '../utils/store.js'
+import { createTempStoreOptions } from './testUtils.js'
 
 describe('Store', () => {
 	it('calling the function getStore should return an object', () => {
-		const store = getStore()
+		const store = getStore(createTempStoreOptions())
 
 		assert.isNotNull(store, 'The store exists')
 		assert.isObject(store, 'The store is an object')
 	})
 
 	it('the store should initialize an empty todo list that is an array', () => {
-		const store = getStore()
+		const store = getStore(createTempStoreOptions())
 		const todos = store.get('todos')
 
 		assert.isArray(todos, 'Todos list is an array')
@@ -19,7 +20,7 @@ describe('Store', () => {
 	})
 
 	it('it should initialize with default settings', () => {
-		const store = getStore()
+		const store = getStore(createTempStoreOptions())
 		const settings = store.get('settings')
 
 		assert.isObject(settings, 'Settings is an object')

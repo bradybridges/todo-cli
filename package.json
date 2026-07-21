@@ -1,13 +1,16 @@
 {
 	"name": "@bradyjbridges/todo-cli",
-	"version": "0.9.2",
-	"main": "index.js",
+	"version": "0.9.3",
 	"bin": {
 		"todo": "bin/index.js"
 	},
 	"type": "module",
+	"engines": {
+		"node": ">=20"
+	},
 	"scripts": {
 		"test": "mocha",
+		"typecheck": "tsc",
 		"clean": "rm -rf node_modules && rm package-lock.json"
 	},
 	"keywords": [
@@ -42,6 +45,7 @@
 	},
 	"devDependencies": {
 		"chai": "^5.1.1",
-		"mocha": "^10.7.3"
+		"mocha": "^11.7.6",
+		"typescript": "^7.0.2"
 	}
 }

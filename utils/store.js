@@ -1,5 +1,6 @@
 import Conf from 'conf'
 
+/** @type {import('./types.js').Settings} */
 const defaultStoreSettings = {
 	disableExitMessage: false,
 	exitErrorMessage: 'Exiting due to an error',
@@ -8,6 +9,7 @@ const defaultStoreSettings = {
 	noTasksMessage: 'No TODOs found',
 }
 
+/** @type {import('conf').Options<import('./types.js').StoreSchema>} */
 const storeConfig = {
 	projectName: 'todo',
 	schema: {
@@ -22,6 +24,10 @@ const storeConfig = {
 	},
 }
 
-const getStore = () => new Conf(storeConfig)
+/**
+ * @param {Partial<import('conf').Options<import('./types.js').StoreSchema>>} [options]
+ * @returns {import('conf').default<import('./types.js').StoreSchema>}
+ */
+const getStore = (options = {}) => new Conf({ ...storeConfig, ...options })
 
 export { defaultStoreSettings, getStore }

@@ -12,6 +12,7 @@ const redBoldText = chalk.hex(baseRed).bold
 const yellowBoldText = chalk.hex(baseYellow).bold
 
 const boxWidth = 75
+/** @type {import('boxen').Options} */
 const boxenOptions = {
 	borderColor: baseGreen,
 	borderStyle: 'double',
@@ -23,6 +24,7 @@ const boxenOptions = {
 	width: boxWidth,
 }
 
+/** @param {import('./types.js').StoreSchema} storeManager */
 const printTitle = (storeManager) => {
 	const todos = storeManager.todos
 	const completedTodosCount = todos.filter((todo) => todo.complete).length
@@ -41,7 +43,13 @@ const printTitle = (storeManager) => {
 	console.log(boxen(msg, { ...boxenOptions, title }))
 }
 
+/**
+ * @param {string} text
+ * @param {import('boxen').Options} [options]
+ * @param {string} [type]
+ */
 const printBox = (text, options = {}, type = 'default') => {
+	/** @type {import('boxen').Options} */
 	const boxenOptions = {
 		borderColor: baseGreen,
 		borderStyle: 'double',
@@ -52,6 +60,7 @@ const printBox = (text, options = {}, type = 'default') => {
 		width: boxWidth,
 		...options,
 	}
+	/** @type {Record<string, import('chalk').ChalkInstance>} */
 	const textTypes = {
 		success: greenBoldText,
 		warning: yellowBoldText,
@@ -69,6 +78,7 @@ const printBox = (text, options = {}, type = 'default') => {
 	console.log('\n')
 }
 
+/** @param {import('./types.js').StoreSchema} storeManager */
 const printTodoList = (storeManager) => {
 	const todos = storeManager.todos
 
@@ -79,6 +89,7 @@ const printTodoList = (storeManager) => {
 				? greenItalicText(text)
 				: redBoldText(text)
 
+			/** @type {import('boxen').Options} */
 			const boxenConfig = {
 				borderColor: todo.complete ? baseGreen : baseRed,
 				borderStyle: 'round',
@@ -107,6 +118,10 @@ const printTodoList = (storeManager) => {
 	}
 }
 
+/**
+ * @param {string} msg
+ * @param {boolean} [disableSpacing]
+ */
 const printSuccessMessage = (msg, disableSpacing = false) => {
 	const successMsg = greenText(msg)
 	if (!disableSpacing) console.log('\n')
@@ -114,6 +129,10 @@ const printSuccessMessage = (msg, disableSpacing = false) => {
 	console.log('\n')
 }
 
+/**
+ * @param {string} msg
+ * @param {boolean} [disableSpacing]
+ */
 const printErrorMessage = (msg, disableSpacing = false) => {
 	const errorMsg = redBoldText(msg)
 	if (!disableSpacing) console.log('\n')
@@ -121,6 +140,7 @@ const printErrorMessage = (msg, disableSpacing = false) => {
 	console.log('\n')
 }
 
+/** @param {import('./types.js').StoreSchema} storeManager */
 const printExitMessage = (storeManager) => {
 	const settings = storeManager.settings
 	const { disableExitMessage, exitMessage } = settings
