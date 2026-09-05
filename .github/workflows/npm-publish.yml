@@ -31,4 +31,4 @@ jobs:
           node-version: '24.x'
       - run: npm ci
       - run: npm install -g npm@latest
-      - run: npm publish --access public
+      - run: npm stage publish --access public
